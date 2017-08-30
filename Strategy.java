@@ -1,5 +1,6 @@
 /**
- * Created by EG OLIVER RC on 8/22/2017.
+ * Gets the a list of all buses and passengers and calculates the best bus itinerary
  */
 public interface Strategy {
+    public void execute();
 }

@@ -1,14 +1,62 @@
+import java.util.Iterator;
 import java.util.Map;
-import java.util.HashMap;
+import java.util.Queue;
 
-public class UberStrategy {
-    private Bus[] availableBuses;
+//Uber Strategy- buses only carry one person
+//If a bus is en route to pick up passengers and a bus that is closer becomes available assignments should change
+public class UberStrategy implements Strategy{
+    private Map<Integer, Bus> allBuses;
+    private Queue<Passenger> passengerQueue;
 
-    public UberStrategy(Bus[] availableBuses){
-        this.availableBuses = availableBuses;
+    public UberStrategy(Map<Integer, Bus> allBuses, Queue<Passenger> passengerQueue){
+        this.allBuses = allBuses;
+        this.passengerQueue = passengerQueue;
     }
 
-    public String assignBus (int passengerX, int passengerY){
-        //need to return bus id
+    //returns the ID of the bus closest that carries no passengers
+    //we return busID instead of buses to make it easier to deal case where no bus is available
+    //if no bus is available returns -1
+    public int getClosestBusID(Passenger myPassenger){
+
+        Location passengerSpawn = myPassenger.getSpawn();
+        int busID = -1;
+        int smallestDistance = Integer.MAX_VALUE;
+        Bus iteratorBus;
+        int distance;
+
+        for (Integer iteratorKey : allBuses.keySet()){
+
+            //in this strategy buses only carry one person max
+            iteratorBus = allBuses.get(iteratorKey);
+            if ( iteratorBus.hasPassenger()) { continue; };
+
+            distance = UniverseDefinition.getDistance(passengerSpawn, iteratorBus.getLocation());
+            if ( distance < smallestDistance ) {
+                smallestDistance = distance;
+                busID = iteratorKey;
+            }
+        }
+
+        return busID;
     }
+
+    public void assignBuses(){
+
+        Iterator<Passenger> passengerIterator = passengerQueue.iterator();
+        int closestBusID;
+        Passenger myPassenger;
+
+        while ( passengerIterator.hasNext() ) {
+            myPassenger = passengerIterator.next();
+            closestBusID = getClosestBusID( myPassenger );
+            allBuses.get(closestBusID).addDestination( myPassenger.getSpawn() );
+            allBuses.get(closestBusID).addDestination( myPassenger.getDestination() );
+
+        }
+    }
+
+    public void execute(){
+
+    }
+
 }

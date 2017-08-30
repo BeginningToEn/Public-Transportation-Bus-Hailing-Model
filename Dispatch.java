@@ -1,20 +1,37 @@
 /**
- * Assigns passengers and sends their location to buses
+ * Dispatch class tells buses where to go to pick up passengers
  * Assigns passengers based on different strategies
  */
 
-import java.lang.Math;
+import java.util.Map;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Dispatch {
     //needs to maintain an up to date available buses list for UberStrategy;
 
-    private Strategy myUberStrategy;
+    private Strategy myStrategy;
+    private Map<Integer, Bus> availableBuses;
+    private Map<Integer, Bus> allBuses;
+    private Queue<Passenger> passengerQueue;
 
     public Dispatch(){
 
+        this.passengerQueue = new ConcurrentLinkedQueue();
     }
 
-    public static int getDistance(int x_1, int y_1, int x_2, int y_2){
-        return Math.abs( x_1 - x_2 ) + Math.abs( y_1 - y_2 );
+    public void moveBuses(){
+        for (Bus myIterator : allBuses.values()){
+            myIterator.move();
+        }
     }
+
+    //use assignPassengers function when passengerQueue is not empty
+    public void assignPassengers(){
+        while ( !passengerQueue.isEmpty() && !availableBuses.isEmpty()){
+            myStrategy.execute();
+
+        }
+    }
+
 }
