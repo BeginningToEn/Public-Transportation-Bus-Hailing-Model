@@ -13,6 +13,7 @@ public class Dispatch {
     private Strategy myStrategy;
     private Map<Integer, Bus> availableBuses;
     private Map<Integer, Bus> allBuses;
+    private Map<Integer, Passenger> allPassengers;
     private Queue<Passenger> passengerQueue;
 
     public Dispatch(){
@@ -32,6 +33,10 @@ public class Dispatch {
             myStrategy.execute();
 
         }
+    }
+
+    public Passenger getPassenger(int ID) {
+        return allPassengers.get(ID);
     }
 
 }

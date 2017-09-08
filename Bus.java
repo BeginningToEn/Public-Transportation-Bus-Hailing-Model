@@ -1,17 +1,20 @@
-import java.util.List;
 import java.util.Queue;
+import java.util.Set;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Bus {
     private Integer ID;
     private boolean hasPassenger;
     private Location currentLocation;
-    private Queue<Location> destinations;
-    private List<Passenger> currentPassengers;
+    private Queue<PassengerActionLocation> itinerary;
+    private Set<Passenger> currentPassengers;
+    private Set<Passenger> passengersToPickUp;
 
     public Bus(int ID, Location currentLocation){
         this.ID = ID;
         this.hasPassenger = false;      //buses on creation are empty
         this.currentLocation = currentLocation;
+        this.itinerary = new ConcurrentLinkedQueue<>();
     }
 
     public Location getLocation() {
@@ -23,13 +26,13 @@ public class Bus {
     }
 
     public void move(){
-        if (currentLocation.getX() < destinations.peek().getX()) {
+        if (currentLocation.getX() < itinerary.peek().getX()) {
             currentLocation.moveDown();
-        } else if (currentLocation.getX() > destinations.peek().getX()) {
+        } else if (currentLocation.getX() > itinerary.peek().getX()) {
             currentLocation.moveUp();
-        } else if (currentLocation.getY() > destinations.peek().getY()) {
+        } else if (currentLocation.getY() > itinerary.peek().getY()) {
             currentLocation.moveLeft();
-        } else if (currentLocation.getY() < destinations.peek().getY()) {
+        } else if (currentLocation.getY() < itinerary.peek().getY()) {
             currentLocation.moveRight();
         }
     }
@@ -38,11 +41,15 @@ public class Bus {
         return ID;
     }
 
-    public void setDestinations(Queue<Location> destinations) {
-        this.destinations = destinations;
+    public void setItinerary(Queue<PassengerActionLocation> itinerary) {
+        this.itinerary = itinerary;
     }
 
-    public void addDestination(Location myLocation){
-        destinations.offer(myLocation);
+    public void update(){
+        for (Passenger it : passengersToPickUp) {
+            if (it.getSpawn() == currentLocation){
+
+            }
+        }
     }
 }
