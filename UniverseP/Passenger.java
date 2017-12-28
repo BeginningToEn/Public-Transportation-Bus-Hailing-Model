@@ -1,19 +1,20 @@
+package UniverseP;
 
 public class Passenger {
     private boolean onBus;
-    private Location spawn;
-    private Location destination;
+    private PassengerActionLocation spawn;
+    private PassengerActionLocation destination;
     private int passengerID;
 
     public Passenger(){
 
     }
 
-    public Location getSpawn() {
+    public PassengerActionLocation getSpawn() {
         return spawn;
     }
 
-    public Location getDestination() {
+    public PassengerActionLocation getDestination() {
         return destination;
     }
 

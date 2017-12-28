@@ -1,3 +1,7 @@
+package Strategies;
+
+import UniverseP.*;
+
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Queue;
@@ -49,9 +53,8 @@ public class UberStrategy implements Strategy{
         while ( passengerIterator.hasNext() ) {
             myPassenger = passengerIterator.next();
             closestBusID = getClosestBusID( myPassenger );
-            allBuses.get(closestBusID).addDestination( myPassenger.getSpawn() );
-            allBuses.get(closestBusID).addDestination( myPassenger.getDestination() );
-
+            Itinerary myItinerary = Itinerary.createDirectItinerary(myPassenger);
+            allBuses.get(closestBusID).setItinerary(myItinerary);
         }
     }
 

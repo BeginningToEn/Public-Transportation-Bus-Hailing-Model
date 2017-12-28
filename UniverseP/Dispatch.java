@@ -1,7 +1,9 @@
-/**
+package UniverseP; /**
  * Dispatch class tells buses where to go to pick up passengers
  * Assigns passengers based on different strategies
  */
+
+import Strategies.Strategy;
 
 import java.util.Map;
 import java.util.Queue;

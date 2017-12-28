@@ -1,4 +1,6 @@
-import java.awt.Point;
+package UniverseP;
+
+import UniverseP.Location;
 
 public class UniverseDefinition {
     private int customNumBuses;
@@ -23,5 +25,13 @@ public class UniverseDefinition {
 
     public static int getDistance(Location a, Location b){
         return Math.abs( a.getX() - b.getX() ) + Math.abs( a.getY() - b.getY() );
+    }
+
+    public int getGridLength() {
+        return gridLength;
+    }
+
+    public int getGridHeight() {
+        return gridHeight;
     }
 }

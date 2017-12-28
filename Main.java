@@ -1,3 +1,6 @@
+import Memory.MemoryPrinter;
+import Memory.UniverseMemory;
+
 /**
  * Created by EG OLIVER RC on 8/17/2017.
  */
