@@ -8,7 +8,7 @@ public class Bus {
     private Integer ID;
     private boolean hasPassenger;
     private Location currentLocation;
-    private Queue<PassengerActionLocation> itinerary;
+    private Queue<ActionableLocation> itinerary;
     private Set<Passenger> currentPassengers;
     private Set<Passenger> passengersToPickUp;
 
@@ -43,7 +43,7 @@ public class Bus {
         return ID;
     }
 
-    public void setItinerary(Queue<PassengerActionLocation> itinerary) {
+    public void setItinerary(Queue<ActionableLocation> itinerary) {
         this.itinerary = itinerary;
     }
 

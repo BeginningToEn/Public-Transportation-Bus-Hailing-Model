@@ -6,15 +6,15 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 /**
  * Created by EG OLIVER RC on 9/7/2017.
  */
-public class Itinerary extends ConcurrentLinkedDeque<PassengerActionLocation>{
-    private Queue<PassengerActionLocation> destinationQueue;
+public class Itinerary extends ConcurrentLinkedDeque<ActionableLocation>{
+    private Queue<ActionableLocation> destinationQueue;
 
     public Itinerary() {
         this.destinationQueue = new ConcurrentLinkedDeque<>();
     }
 
     @Override
-    public boolean offer (PassengerActionLocation myLocation) {
+    public boolean offer (ActionableLocation myLocation) {
         destinationQueue.offer(myLocation);
         return this.isEmpty();
     }

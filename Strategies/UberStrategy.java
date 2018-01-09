@@ -34,7 +34,7 @@ public class UberStrategy implements Strategy{
             iteratorBus = allBuses.get(iteratorKey);
             if ( iteratorBus.hasPassenger()) { continue; };
 
-            distance = UniverseDefinition.getDistance(passengerSpawn, iteratorBus.getLocation());
+            distance = ScenarioDefinition.getDistance(passengerSpawn, iteratorBus.getLocation());
             if ( distance < smallestDistance ) {
                 smallestDistance = distance;
                 busID = iteratorKey;

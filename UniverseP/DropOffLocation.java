@@ -3,16 +3,16 @@ package UniverseP;
 /**
  * Created by EG OLIVER RC on 9/7/2017.
  */
-public class DropOffLocation extends Location implements PassengerActionLocation {
-    private Passenger passengerToDropOff;
+public class DropOffLocation extends Location implements ActionableLocation {
+    private int passengerID;
 
-    public DropOffLocation (int x, int y, Passenger passengerToDropOff) {
+    public DropOffLocation (int x, int y, int passengerID) {
         super(x, y);
-        this.passengerToDropOff = passengerToDropOff;
+        this.passengerID = passengerID;
     }
 
-    public Passenger getPassenger() {
-        return passengerToDropOff;
+    public int getPassengerID() {
+        return passengerID;
     }
 
     public boolean isPickUpLocation() {

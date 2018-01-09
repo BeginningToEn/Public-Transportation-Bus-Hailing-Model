@@ -2,19 +2,24 @@ package UniverseP;
 
 public class Passenger {
     private boolean onBus;
-    private PassengerActionLocation spawn;
-    private PassengerActionLocation destination;
+    private ActionableLocation spawn;
+    private ActionableLocation destination;
     private int passengerID;
+    private int spawnTurn;  //the turn during which the passenger asked for a ride
 
-    public Passenger(){
-
+    public Passenger(int ID, int spawn_x, int spawn_y, int destination_x, int destination_y, int spawnTurn) {
+        this.onBus = false;
+        this.spawn = new PickUpLocation(spawn_x, spawn_y, ID);
+        this.destination = new DropOffLocation(destination_x, destination_y, ID);
+        this.passengerID = ID;
+        this.spawnTurn = spawnTurn;
     }
 
-    public PassengerActionLocation getSpawn() {
+    public ActionableLocation getSpawn() {
         return spawn;
     }
 
-    public PassengerActionLocation getDestination() {
+    public ActionableLocation getDestination() {
         return destination;
     }
 
