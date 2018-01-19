@@ -18,9 +18,11 @@ public class Passenger {
     public ActionableLocation getSpawn() {
         return spawn;
     }
-
     public ActionableLocation getDestination() {
         return destination;
+    }
+    public int getSpawnTurn() {
+        return spawnTurn;
     }
 
     @Override
@@ -37,5 +39,11 @@ public class Passenger {
     @Override
     public int hashCode() {
         return passengerID;
+    }
+
+    @Override
+    public String toString() {
+        return "ID: " + passengerID + "-----Spawn: (" + spawn.getX() + ", " + spawn.getY() + ")-----Destination: (" +
+                destination.getX() + ", " + destination.getY() + ")-----SpawnTurn: " + spawnTurn;
     }
 }

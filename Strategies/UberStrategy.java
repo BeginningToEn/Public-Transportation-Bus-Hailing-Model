@@ -22,7 +22,7 @@ public class UberStrategy implements Strategy{
     //if no bus is available returns -1
     public int getClosestBusID(Passenger myPassenger){
 
-        Location passengerSpawn = myPassenger.getSpawn();
+        ActionableLocation passengerSpawn = myPassenger.getSpawn();
         int busID = -1;
         int smallestDistance = Integer.MAX_VALUE;
         Bus iteratorBus;

@@ -1,8 +1,13 @@
 package UniverseP;
 
 /**
- * Created by EG OLIVER RC on 8/24/2017.
+ * Location is the top level class
+ * Actionable location is a wrapper interface around DropOff/PickUpLocation
+ * DropOff/PickUpLocation are a subtype of Location and both implement the ActionableLocation Interface
+ * DropOff/PickUpLocation object can be saved as type ActionableLocation or Location
+ * Location or ActionableLocation cannot be saved as types DropOff/PickUpLocation
  */
+
 public class Location {
     private int x;
     private int y;
