@@ -19,12 +19,8 @@ class NormalTimeTableFactory{
     private int gridHeight;
 
     private int numPassengers;
-    private int x_spawnAvg;
-    private int y_spawnAvg;
-    private int spawnStandardDeviation;
-    private int x_destinationAvg;
-    private int y_destinationAvg;
-    private int destinationStandardDeviation;
+    private NormalLocation spawn;
+    private NormalLocation destination;
     private int spawnTimeAvg;
     private int spawnTimeStandardDeviation;
 
@@ -33,24 +29,20 @@ class NormalTimeTableFactory{
         this.randNumGen = new Random();
     }
 
-    private void updateDefinition(ScenarioDefinition myScenarioDef, PassengerDistributionDefinition myPassengerDef) {
+    private void updateDefinition(ScenarioDefinition myScenarioDef, NormalDistributionDefinition myPassengerDef) {
         this.numTurns = myScenarioDef.getNumTurns();
         this.gridLength = myScenarioDef.getGridLength();
         this.gridHeight = myScenarioDef.getGridHeight();
-        this.numPassengers = myPassengerDef.getNumPassengers();
-        this.x_spawnAvg = myPassengerDef.getX_spawnAvg();
-        this.y_spawnAvg = myPassengerDef.getY_spawnAvg();
-        this.spawnStandardDeviation = myPassengerDef.getSpawnStandardDeviation();
-        this.x_destinationAvg = myPassengerDef.getX_destinationAvg();
-        this.y_destinationAvg = myPassengerDef.getY_destinationAvg();
-        this.destinationStandardDeviation = myPassengerDef.getDestinationStandardDeviation();
+        this.numPassengers = myScenarioDef.getNumPassengers();
+        this.spawn = myPassengerDef.getSpawn();
+        this.destination = myPassengerDef.getDestination();
         this.spawnTimeAvg = myPassengerDef.getSpawnTimeAvg();
         this.spawnTimeStandardDeviation = myPassengerDef.getSpawnTimeStandardDeviation();
     }
 
 
     PassengerTimeTable createDistribution( ScenarioDefinition myScenarioDef,
-                                           PassengerDistributionDefinition myPassengerDef ) {
+                                           NormalDistributionDefinition myPassengerDef ) {
 
         this.updateDefinition(myScenarioDef, myPassengerDef);
 
@@ -81,8 +73,8 @@ class NormalTimeTableFactory{
         int x_spawn;
         int y_spawn;
         do {
-            x_spawn = (int) Math.round( randNumGen.nextGaussian() * spawnStandardDeviation + x_spawnAvg );
-            y_spawn = (int) Math.round( randNumGen.nextGaussian() * spawnStandardDeviation + y_spawnAvg );
+            x_spawn = (int) Math.round( randNumGen.nextGaussian() * spawn.getStDev() + spawn.getX() );
+            y_spawn = (int) Math.round( randNumGen.nextGaussian() * spawn.getStDev() + spawn.getY() );
         } while (!this.isValidSpawn(x_spawn, y_spawn));
 
         //generates the destination according to a normal distribution and makes sure it's inbounds and != spawn
@@ -90,8 +82,8 @@ class NormalTimeTableFactory{
         int x_dest;
         int y_dest;
         do {
-            x_dest = (int) Math.round( randNumGen.nextGaussian() * destinationStandardDeviation + x_destinationAvg );
-            y_dest = (int) Math.round( randNumGen.nextGaussian() * destinationStandardDeviation + y_destinationAvg );
+            x_dest = (int) Math.round( randNumGen.nextGaussian() * destination.getStDev() + destination.getX() );
+            y_dest = (int) Math.round( randNumGen.nextGaussian() * destination.getStDev() + destination.getY() );
         } while (!this.isValidDestination(x_spawn, y_spawn, x_dest, y_dest));
 
         return new Passenger(ID, x_spawn, y_spawn, x_dest, y_dest, spawnTurn);

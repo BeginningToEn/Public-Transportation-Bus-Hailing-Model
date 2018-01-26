@@ -1,5 +1,3 @@
-import Memory.MemoryPrinter;
-import Memory.UniverseMemory;
 import UniverseP.PassengerFactory.*;
 import UniverseP.ScenarioDefinition;
 
@@ -10,10 +8,10 @@ public class Main {
     public static void main(String[] args) {
 
         ScenarioDefinition myScenDef = new ScenarioDefinition(50, 139, 157, 100);
-        //PassengerDistributionDefinition myPassDef = PassengerDistributionDefinition.createUniformDistDef(50);
-        PassengerDistributionDefinition myPassDef = PassengerDistributionDefinition.createNormalDistDef(100, 69, 110, 40, 80, 90, 20, 60, 25);
+        NormalDistributionDefinition myPassDef = NormalDistributionDefinition.createUniformDistDef(20);
+        //PassengerDistributionDefinition myPassDef = PassengerDistributionDefinition.createNormalDistDef(100, 69, 110, 40, 80, 90, 20, 60, 25);
         PassengerTimeTableFactory myPassFact = new PassengerTimeTableFactory();
 
-        myPassFact.createDistribution(myScenDef, myPassDef).printAllPassengers();
+        myPassFact.createNormalDistribution(myScenDef, myPassDef).printAllPassengers();
     }
 }

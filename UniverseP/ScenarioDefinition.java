@@ -9,13 +9,15 @@ public class ScenarioDefinition {
     private int gridLength;
     private int gridHeight;
     private int numTurns;
+    private int numPassengers;
 
 
-    public ScenarioDefinition(int numBuses, int gridLength, int gridHeight, int numTurns){
+    public ScenarioDefinition(int numBuses, int gridLength, int gridHeight, int numTurns, int numPassengers){
         this.numBuses = numBuses;       //1, 25, 50, 75, 100, 200
         this.gridLength = gridLength;                                //this gives the grid 1000 spaces should give good density
         this.gridHeight = gridHeight;                                //if there is 100 buses that's 1/10 of spaces with a bus
         this.numTurns = numTurns;
+        this.numPassengers = numPassengers;
     }
 
     public static int getDistance(Location a, Location b){
@@ -36,4 +38,5 @@ public class ScenarioDefinition {
     public int getNumTurns() {
         return numTurns;
     }
+    public int getNumPassengers() { return numPassengers; }
 }

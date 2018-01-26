@@ -21,4 +21,14 @@ public class PassengerTimeTable extends HashMap<Integer, List<Passenger>> {
             }
         }
     }
+
+    public void printAllXSpawn() {
+        for ( int iterator : this.keySet() ) {
+            for ( Passenger passIt : this.get(iterator) ) {
+                System.out.println(passIt.getSpawn().getX());
+            }
+        }
+    }
+
+    
 }

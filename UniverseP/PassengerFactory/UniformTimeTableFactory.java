@@ -23,18 +23,17 @@ class UniformTimeTableFactory{
         this.randNumGen = new Random();
     }
 
-    private void updateDefinition(ScenarioDefinition myScenarioDef, PassengerDistributionDefinition myPassengerDef) {
+    private void updateDefinition(ScenarioDefinition myScenarioDef) {
         this.numTurns = myScenarioDef.getNumTurns();
         this.gridLength = myScenarioDef.getGridLength();
         this.gridHeight = myScenarioDef.getGridHeight();
-        this.numPassengers = myPassengerDef.getNumPassengers();
+        this.numPassengers = myScenarioDef.getNumPassengers();
     }
 
 
-    PassengerTimeTable createDistribution( ScenarioDefinition myScenarioDef,
-                                           PassengerDistributionDefinition myPassengerDef ) {
+    PassengerTimeTable createDistribution( ScenarioDefinition myScenarioDef ) {
 
-        this.updateDefinition(myScenarioDef, myPassengerDef);
+        this.updateDefinition(myScenarioDef);
 
         PassengerTimeTable passengerTimeTable = new PassengerTimeTable();
         Passenger passengerIterator;
