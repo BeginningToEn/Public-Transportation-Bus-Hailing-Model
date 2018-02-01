@@ -31,7 +31,8 @@ public class NormalLocation {
         NormalLocation location = (NormalLocation) o;
 
         if (x != location.x) return false;
-        return y == location.y;
+        if (y != location.y) return false;
+        return standardDeviation == location.standardDeviation;
 
     }
 }

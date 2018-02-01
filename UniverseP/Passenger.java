@@ -46,4 +46,5 @@ public class Passenger {
         return "ID: " + passengerID + "-----Spawn: (" + spawn.getX() + ", " + spawn.getY() + ")-----Destination: (" +
                 destination.getX() + ", " + destination.getY() + ")-----SpawnTurn: " + spawnTurn;
     }
+
 }

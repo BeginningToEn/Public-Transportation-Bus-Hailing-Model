@@ -75,16 +75,19 @@ class NormalTimeTableFactory{
         do {
             x_spawn = (int) Math.round( randNumGen.nextGaussian() * spawn.getStDev() + spawn.getX() );
             y_spawn = (int) Math.round( randNumGen.nextGaussian() * spawn.getStDev() + spawn.getY() );
-        } while (!this.isValidSpawn(x_spawn, y_spawn));
+        } while (!this.isInbounds(x_spawn, y_spawn));
 
         //generates the destination according to a normal distribution and makes sure it's inbounds and != spawn
         //since spawn == destination would be a nonsensical trip
         int x_dest;
         int y_dest;
+        boolean validDestination;
         do {
             x_dest = (int) Math.round( randNumGen.nextGaussian() * destination.getStDev() + destination.getX() );
             y_dest = (int) Math.round( randNumGen.nextGaussian() * destination.getStDev() + destination.getY() );
-        } while (!this.isValidDestination(x_spawn, y_spawn, x_dest, y_dest));
+            validDestination = this.isInbounds(x_dest, y_dest) &&
+                                this.isDifferentLocation(x_spawn, y_spawn, x_dest, y_dest);
+        } while (!validDestination);
 
         return new Passenger(ID, x_spawn, y_spawn, x_dest, y_dest, spawnTurn);
     }
@@ -110,14 +113,14 @@ class NormalTimeTableFactory{
         return spawnTurn >= 0 && spawnTurn < numTurns;
     }
 
-    private boolean isValidSpawn(int x_coordinate, int y_coordinate) {
+    private boolean isInbounds(int x_coordinate, int y_coordinate) {
         if ( x_coordinate < 0 || y_coordinate < 0 ) { return false; }
         if ( x_coordinate >= gridLength ) { return false; }
         if ( y_coordinate >= gridHeight ) { return false; }
         return true;
     }
 
-    private boolean isValidDestination( int x_spawn, int y_spawn, int x_destination, int y_destination) {
+    private boolean isDifferentLocation(int x_spawn, int y_spawn, int x_destination, int y_destination) {
         return x_spawn != x_destination || y_spawn != y_destination;
     }
 }

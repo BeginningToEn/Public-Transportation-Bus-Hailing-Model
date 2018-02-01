@@ -1,21 +1,24 @@
 package UniverseP;
 
-import UniverseP.Location;
-import UniverseP.PassengerFactory.PassengerTimeTable;
+import UniverseP.PassengerFactory.NormalDistributionDefinition;
+import java.util.Optional;
 
 public class ScenarioDefinition {
 
-    private int numBuses;
     private int gridLength;
     private int gridHeight;
+
+    private int numBuses;
     private int numTurns;
+
     private int numPassengers;
 
 
-    public ScenarioDefinition(int numBuses, int gridLength, int gridHeight, int numTurns, int numPassengers){
-        this.numBuses = numBuses;       //1, 25, 50, 75, 100, 200
-        this.gridLength = gridLength;                                //this gives the grid 1000 spaces should give good density
-        this.gridHeight = gridHeight;                                //if there is 100 buses that's 1/10 of spaces with a bus
+    public ScenarioDefinition(int gridLength, int gridHeight, int numPassengers, int numBuses, int numTurns){
+
+        this.gridLength = gridLength;   //this gives the grid 1000 spaces should give good density
+        this.gridHeight = gridHeight;   //if there is 100 buses that's 1/10 of spaces with a bus
+        this.numBuses = numBuses;                //1, 25, 50, 75, 100, 200
         this.numTurns = numTurns;
         this.numPassengers = numPassengers;
     }
