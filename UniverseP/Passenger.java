@@ -33,7 +33,6 @@ public class Passenger {
         Passenger passenger = (Passenger) o;
 
         return passengerID == passenger.passengerID;
-
     }
 
     @Override

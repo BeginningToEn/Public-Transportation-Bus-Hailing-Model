@@ -32,8 +32,7 @@ public class Dispatch {
     //use assignPassengers function when passengerQueue is not empty
     public void assignPassengers(){
         while ( !passengerQueue.isEmpty() && !availableBuses.isEmpty()){
-            myStrategy.execute();
-
+            myStrategy.assignBuses();
         }
     }
 

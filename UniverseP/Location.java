@@ -34,7 +34,11 @@ public class Location {
 
         if (x != location.x) return false;
         return y == location.y;
+    }
 
+    @Override
+    public String toString(){
+        return "(" + x + "," + y + ")";
     }
 
     //Coordinates (0,0) are at the top left corner and increase going down and right

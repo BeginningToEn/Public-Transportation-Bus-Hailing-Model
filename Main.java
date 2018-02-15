@@ -1,9 +1,8 @@
-import UniverseP.Passenger;
-import UniverseP.PassengerFactory.*;
-import UniverseP.ScenarioDefinition;
+import Strategies.SinglePassengerStrategy;
+import UniverseP.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 
 /**
@@ -12,13 +11,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
-        //ScenarioDefinition myScenDef = new ScenarioDefinition(50, 139, 157, 100);
-        //NormalDistributionDefinition myPassDef = NormalDistributionDefinition.createUniformDistDef(20);
-        //PassengerDistributionDefinition myPassDef = PassengerDistributionDefinition.createNormalDistDef(100, 69, 110, 40, 80, 90, 20, 60, 25);
-        //PassengerTimeTableFactory myPassFact = new PassengerTimeTableFactory();
-
-        //myPassFact.createNormalDistribution(myScenDef, myPassDef).printAllPassengers();
-
+        /*
         ScenarioDefinition myScenDef = new ScenarioDefinition( 139, 157, 100, 10, 100);
         NormalLocation mySpawn = new NormalLocation(27, 32, 10);
         NormalLocation myDestination = new NormalLocation(109, 128, 15);
@@ -27,5 +20,28 @@ public class Main {
 
         PassengerTimeTable myTable = myFactory.createNormalDistribution(myScenDef, myDistDef);
         myTable.printAllPassengers();
+        */
+
+
+        Bus myBus = new Bus(1, new Location(0,0));
+        Bus myBus2 = new Bus(2, new Location(20,20));
+        Map<Integer, Bus> allBuses = new HashMap<>();
+        allBuses.put(1, myBus);
+        Queue<Passenger> passengerQueue = new ConcurrentLinkedQueue<>();
+        passengerQueue.offer(new Passenger(1, 1, 1, 2, 2, 0));
+        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, passengerQueue);
+
+        System.out.println(myBus.getItinerary().isEmpty());
+
+        myStrat.assignBuses();
+
+        System.out.println(myBus.getItinerary().peek().getClass());
+        System.out.println(new PickUpLocation(1,1,1).equals(myBus.getItinerary().peek()) + "\n");
+
+        System.out.println(myBus.getItinerary().toArray()[0]);
+        System.out.println(myBus.getItinerary().toArray()[1]);
+        System.out.println("Bus 2: " + myBus2.getItinerary().isEmpty());
+        ActionableLocation myLoc = new PickUpLocation(1,1,1);
+        System.out.println(myLoc.getClass());
     }
 }

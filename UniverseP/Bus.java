@@ -6,35 +6,33 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Bus {
     private Integer ID;
-    private boolean hasPassenger;
     private Location currentLocation;
-    private Queue<ActionableLocation> itinerary;
+    private Itinerary myItinerary;
     private Set<Passenger> currentPassengers;
     private Set<Passenger> passengersToPickUp;
 
     public Bus(int ID, Location currentLocation){
         this.ID = ID;
-        this.hasPassenger = false;      //buses on creation are empty
         this.currentLocation = currentLocation;
-        this.itinerary = new ConcurrentLinkedQueue<>();
+        this.myItinerary = new Itinerary();
     }
 
     public Location getLocation() {
         return currentLocation;
     }
 
-    public boolean hasPassenger() {
-        return hasPassenger;
+    public int howManyPassengers() {
+        return currentPassengers.size();
     }
 
     public void move(){
-        if (currentLocation.getX() < itinerary.peek().getX()) {
+        if (currentLocation.getX() < myItinerary.peek().getX()) {
             currentLocation.moveDown();
-        } else if (currentLocation.getX() > itinerary.peek().getX()) {
+        } else if (currentLocation.getX() > myItinerary.peek().getX()) {
             currentLocation.moveUp();
-        } else if (currentLocation.getY() > itinerary.peek().getY()) {
+        } else if (currentLocation.getY() > myItinerary.peek().getY()) {
             currentLocation.moveLeft();
-        } else if (currentLocation.getY() < itinerary.peek().getY()) {
+        } else if (currentLocation.getY() < myItinerary.peek().getY()) {
             currentLocation.moveRight();
         }
     }
@@ -43,8 +41,12 @@ public class Bus {
         return ID;
     }
 
-    public void setItinerary(Queue<ActionableLocation> itinerary) {
-        this.itinerary = itinerary;
+    public Itinerary getItinerary() {
+        return myItinerary;
+    }
+
+    public void setMyItinerary(Itinerary myItinerary) {
+        this.myItinerary = myItinerary;
     }
 
     public void update(){
@@ -53,5 +55,10 @@ public class Bus {
 
             }
         }
+    }
+
+    @Override
+    public String toString(){
+        return "ID: " + ID + " Current Location: " + currentLocation;
     }
 }
