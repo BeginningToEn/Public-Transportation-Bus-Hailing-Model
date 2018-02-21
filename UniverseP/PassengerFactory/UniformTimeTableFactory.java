@@ -35,7 +35,7 @@ class UniformTimeTableFactory{
 
         this.updateDefinition(myScenarioDef);
 
-        PassengerTimeTable passengerTimeTable = new PassengerTimeTable();
+        PassengerTimeTable passengerTimeTable = new PassengerTimeTable(myScenarioDef);
         Passenger passengerIterator;
         int spawnTurnIterator;
 

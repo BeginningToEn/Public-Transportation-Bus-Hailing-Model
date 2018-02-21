@@ -46,7 +46,7 @@ class NormalTimeTableFactory{
 
         this.updateDefinition(myScenarioDef, myPassengerDef);
 
-        PassengerTimeTable passengerTimeTable  = new PassengerTimeTable();
+        PassengerTimeTable passengerTimeTable  = new PassengerTimeTable(myScenarioDef);
         Passenger passengerIterator;
         int spawnTurnIterator;
 

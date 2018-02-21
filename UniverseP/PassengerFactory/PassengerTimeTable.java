@@ -1,6 +1,9 @@
 package UniverseP.PassengerFactory;
 
 import UniverseP.Passenger;
+import UniverseP.PassengerDistributionDefinition;
+import UniverseP.PassengerSource;
+import UniverseP.ScenarioDefinition;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +17,18 @@ import java.util.List;
  * from a pre-generated table or from live user input
  */
 
-public class PassengerTimeTable extends HashMap<Integer, List<Passenger>> {
+public class PassengerTimeTable extends HashMap<Integer, List<Passenger>>{
+
+    /*
+     * For validation. Since ScenarioSimulator can draw data from PassengerTimeTable we need to validate the
+     * PassengerTimeTable's PassDistDef against the ScenarioDefinition of the simulation to make sure none of the
+     * passengers are spawned out of bounds
+     */
+    private ScenarioDefinition myDef;
+
+    public PassengerTimeTable (ScenarioDefinition myDef) {
+        this.myDef = myDef;
+    }
 
     public void printAllPassengers() {
         for ( int iterator : this.keySet() ) {
@@ -56,4 +70,5 @@ public class PassengerTimeTable extends HashMap<Integer, List<Passenger>> {
 
         return allXSPawns;
     }
+
 }
