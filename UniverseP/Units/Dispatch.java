@@ -1,4 +1,4 @@
-package UniverseP; /**
+package UniverseP.Units; /**
  * Dispatch class tells buses where to go to pick up passengers
  * Assigns passengers based on different strategies
  */

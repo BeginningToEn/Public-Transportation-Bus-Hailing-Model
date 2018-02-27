@@ -1,6 +1,9 @@
 package Strategies;
 
-import UniverseP.*;
+import UniverseP.ScenarioComponents.ScenarioDefinition;
+import UniverseP.Units.Bus;
+import UniverseP.Units.Itinerary;
+import UniverseP.Units.Passenger;
 
 import java.util.Map;
 import java.util.Optional;

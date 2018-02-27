@@ -1,4 +1,4 @@
-package UniverseP;
+package UniverseP.ScenarioComponents;
 
 /**
  * Created by EG OLIVER RC on 1/29/2018.

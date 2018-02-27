@@ -1,6 +1,5 @@
-package UniverseP;
+package UniverseP.Units;
 
-import java.awt.*;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedDeque;
 

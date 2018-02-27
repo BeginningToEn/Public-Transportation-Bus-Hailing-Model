@@ -1,6 +1,6 @@
 package UniverseP.PassengerFactory;
 
-import UniverseP.Passenger;
+import UniverseP.Units.Passenger;
 import org.junit.Test;
 
 import java.util.ArrayList;

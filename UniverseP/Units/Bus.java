@@ -1,8 +1,6 @@
-package UniverseP;
+package UniverseP.Units;
 
-import java.util.Queue;
 import java.util.Set;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Bus {
     private Integer ID;

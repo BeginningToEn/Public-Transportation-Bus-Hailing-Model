@@ -1,10 +1,9 @@
-package UniverseP;
+package UniverseP.BusFactory;
 
-import UniverseP.PassengerFactory.NormalDistributionDefinition;
-import UniverseP.PassengerFactory.PassengerTimeTable;
+import UniverseP.Units.Bus;
+import UniverseP.Units.Location;
+import UniverseP.ScenarioComponents.ScenarioDefinition;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 /**

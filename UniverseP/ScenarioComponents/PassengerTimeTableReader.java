@@ -1,6 +1,7 @@
-package UniverseP;
+package UniverseP.ScenarioComponents;
 
 import UniverseP.PassengerFactory.PassengerTimeTable;
+import UniverseP.Units.Passenger;
 
 import java.util.List;
 
@@ -15,6 +16,10 @@ public class PassengerTimeTableReader implements PassengerSource {
     public PassengerTimeTableReader( PassengerTimeTable myTable) {
         this.time = 0;
         this.myTable = myTable;
+    }
+
+    public ScenarioDefinition getScenarioDef() {
+        return myTable.getMyDef();
     }
 
     @Override

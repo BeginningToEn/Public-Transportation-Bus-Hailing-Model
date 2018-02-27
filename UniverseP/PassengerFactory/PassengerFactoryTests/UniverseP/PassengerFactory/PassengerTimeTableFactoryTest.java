@@ -1,7 +1,7 @@
 package UniverseP.PassengerFactory;
 
-import UniverseP.Passenger;
-import UniverseP.ScenarioDefinition;
+import UniverseP.Units.Passenger;
+import UniverseP.ScenarioComponents.ScenarioDefinition;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

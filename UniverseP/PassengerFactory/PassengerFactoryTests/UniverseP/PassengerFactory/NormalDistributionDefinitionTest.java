@@ -1,11 +1,6 @@
 package UniverseP.PassengerFactory;
 
-import org.junit.rules.ExpectedException;
 import org.junit.Test;
-import org.junit.Rule;
-
-
-import static org.junit.Assert.*;
 
 /**
  * Created by EG OLIVER RC on 1/25/2018.

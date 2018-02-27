@@ -1,4 +1,4 @@
-package UniverseP;
+package UniverseP.Units;
 
 public class Passenger {
     private boolean onBus;

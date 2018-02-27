@@ -1,9 +1,7 @@
 package UniverseP.PassengerFactory;
 
-import UniverseP.Passenger;
-import UniverseP.PassengerDistributionDefinition;
-import UniverseP.PassengerSource;
-import UniverseP.ScenarioDefinition;
+import UniverseP.Units.Passenger;
+import UniverseP.ScenarioComponents.ScenarioDefinition;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,8 +24,12 @@ public class PassengerTimeTable extends HashMap<Integer, List<Passenger>>{
      */
     private ScenarioDefinition myDef;
 
-    public PassengerTimeTable (ScenarioDefinition myDef) {
+    public PassengerTimeTable () {
         this.myDef = myDef;
+    }
+
+    public ScenarioDefinition getMyDef() {
+        return myDef;
     }
 
     public void printAllPassengers() {

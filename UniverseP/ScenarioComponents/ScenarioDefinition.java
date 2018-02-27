@@ -1,7 +1,7 @@
-package UniverseP;
+package UniverseP.ScenarioComponents;
 
-import UniverseP.PassengerFactory.NormalDistributionDefinition;
-import java.util.Optional;
+import UniverseP.Units.ActionableLocation;
+import UniverseP.Units.Location;
 
 public class ScenarioDefinition {
 

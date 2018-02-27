@@ -1,6 +1,8 @@
-package UniverseP;
+package UniverseP.ScenarioComponents;
 
 import Memory.UniverseMemory;
+import UniverseP.Units.Dispatch;
+import UniverseP.Units.Passenger;
 
 import java.util.List;
 import java.util.Map;

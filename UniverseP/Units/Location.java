@@ -1,4 +1,4 @@
-package UniverseP;
+package UniverseP.Units;
 
 /**
  * Location is the top level class

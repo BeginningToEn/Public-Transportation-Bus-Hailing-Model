@@ -1,7 +1,7 @@
 package UniverseP.PassengerFactory;
 
-import UniverseP.Passenger;
-import UniverseP.ScenarioDefinition;
+import UniverseP.Units.Passenger;
+import UniverseP.ScenarioComponents.ScenarioDefinition;
 
 import java.util.*;
 
@@ -46,7 +46,7 @@ class NormalTimeTableFactory{
 
         this.updateDefinition(myScenarioDef, myPassengerDef);
 
-        PassengerTimeTable passengerTimeTable  = new PassengerTimeTable(myScenarioDef);
+        PassengerTimeTable passengerTimeTable  = new PassengerTimeTable();
         Passenger passengerIterator;
         int spawnTurnIterator;
 

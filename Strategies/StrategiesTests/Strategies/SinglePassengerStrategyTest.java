@@ -1,6 +1,6 @@
 package Strategies;
 
-import UniverseP.*;
+import UniverseP.Units.*;
 import org.junit.Test;
 
 import java.util.HashMap;

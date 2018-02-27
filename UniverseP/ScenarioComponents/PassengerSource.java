@@ -1,4 +1,6 @@
-package UniverseP;
+package UniverseP.ScenarioComponents;
+
+import UniverseP.Units.Passenger;
 
 import java.util.List;
 
@@ -7,4 +9,5 @@ import java.util.List;
  */
 public interface PassengerSource {
     List<Passenger> getPassengers();
+    ScenarioDefinition getScenarioDef();
 }
