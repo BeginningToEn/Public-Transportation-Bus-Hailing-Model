@@ -23,7 +23,7 @@ public class ScenarioSimulation {
         this.mySource = mySource;
         this.myQueue = new ConcurrentLinkedQueue<Passenger>();
         this.allBuses = allBuses;
-        this.myStrat = new SinglePassengerStrategy(allBuses, myQueue);  //this should be a var
+        this.myStrat = new SinglePassengerStrategy(allBuses, allBuses.keySet(), myQueue);  //this should be a var
     }
 
     public static ScenarioSimulation simulate(ScenarioDefinition myDef, PassengerSource mySource, BusTable allBuses /*an enum for strat should go here*/){

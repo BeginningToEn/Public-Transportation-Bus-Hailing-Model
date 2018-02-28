@@ -24,7 +24,7 @@ public class SinglePassengerStrategyTest {
         Queue<Passenger> passengerQueue = new ConcurrentLinkedQueue<>();
         passengerQueue.offer(new Passenger(1, 1, 1, 2, 2, 0));
 
-        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, passengerQueue);
+        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, allBuses.keySet(), passengerQueue);
 
         assertTrue(myBus.getItinerary().isEmpty());
 
@@ -55,7 +55,7 @@ public class SinglePassengerStrategyTest {
         Queue<Passenger> passengerQueue = new ConcurrentLinkedQueue<>();
         passengerQueue.offer(new Passenger(1, 17, 9, 2, 2, 0));
 
-        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, passengerQueue);
+        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, allBuses.keySet(), passengerQueue);
 
         assertTrue(myBus1.getItinerary().isEmpty());
         assertTrue(myBus2.getItinerary().isEmpty());
@@ -86,7 +86,7 @@ public class SinglePassengerStrategyTest {
         passengerQueue.offer(new Passenger(2, 35, 35, 6, 7, 0));
         passengerQueue.offer(new Passenger(3, 10, 10, 2, 2, 0));
 
-        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, passengerQueue);
+        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, allBuses.keySet(), passengerQueue);
 
         assertTrue(myBus1.getItinerary().isEmpty());
         assertTrue(myBus2.getItinerary().isEmpty());

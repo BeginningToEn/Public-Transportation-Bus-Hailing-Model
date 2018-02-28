@@ -3,12 +3,11 @@ package UniverseP.Units; /**
  * Assigns passengers based on different strategies
  */
 
+import Strategies.SinglePassengerStrategy;
 import Strategies.Strategy;
+import UniverseP.ScenarioComponents.ScenarioDefinition;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Queue;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Dispatch {
@@ -16,17 +15,19 @@ public class Dispatch {
 
     private Strategy myStrategy;
     private Map<Integer, Bus> allBuses;
-    private Set<Integer> availableBuses;
+    private Set<Integer> availableBusIDs;
     private Set<Integer> assignedBuses;
     private Map<Integer, Passenger> allPassengers;
     private Queue<Passenger> passengerQueue;
+    private int busCapacity;
 
-    public Dispatch(Strategy myStrategy, Map<Integer,Bus> allBuses, Queue<Passenger> passengerQueue){
-        this.myStrategy = myStrategy;
+    public Dispatch(Map<Integer, Bus> allBuses, Queue<Passenger> passengerQueue, int busCapacity){
+        this.myStrategy = new SinglePassengerStrategy(allBuses, availableBusIDs, passengerQueue);
         this.allBuses = allBuses;
-        this.availableBuses = new HashSet<Integer>();
-        this.assignedBuses = new HashSet<Integer>();
+        this.availableBusIDs = allBuses.keySet();
+        this.assignedBuses = new HashSet<>();
         this.passengerQueue = new ConcurrentLinkedQueue();
+        this.busCapacity = busCapacity;
     }
 
     public void moveBuses(){
@@ -35,15 +36,19 @@ public class Dispatch {
         }
     }
 
+    public void checkIfArrived(){
+
+    }
+
     //use assignPassengers function when passengerQueue is not empty
     public void assignPassengers(){
-        while ( !passengerQueue.isEmpty() && !availableBuses.isEmpty()){
+        while ( !passengerQueue.isEmpty() && !availableBusIDs.isEmpty()){
             myStrategy.assignBuses();
         }
     }
 
-    public Passenger getPassenger(int ID) {
-        return allPassengers.get(ID);
+    public void updateAvailBuses() {
+
     }
 
 }
