@@ -11,12 +11,15 @@ import java.util.*;
 //If a bus is en route to pick up passengers and a bus that is closer becomes available assignments should change
 public class SinglePassengerStrategy implements Strategy{
     private Map<Integer, Bus> allBuses;
-    private Set<Integer> availableBusIDs;
+    private Set<Integer> availableBusesByIDs;
+    private Set<Integer> assignedBusesByIDs;
     private Queue<Passenger> passengerQueue;
 
-    public SinglePassengerStrategy(Map<Integer, Bus> allBuses, Set<Integer> availableBusIDs, Queue<Passenger> passengerQueue){
+    public SinglePassengerStrategy(Map<Integer, Bus> allBuses, Set<Integer> availableBusesByIDs,
+                                   Set<Integer> assignedBusesByIDs, Queue<Passenger> passengerQueue){
         this.allBuses = allBuses;
-        this.availableBusIDs = availableBusIDs;
+        this.availableBusesByIDs = availableBusesByIDs;
+        this.assignedBusesByIDs = assignedBusesByIDs;
         this.passengerQueue = passengerQueue;
     }
 
@@ -31,7 +34,7 @@ public class SinglePassengerStrategy implements Strategy{
         int distance;
 
         int nextID;
-        Iterator<Integer> nextIdIterator = availableBusIDs.iterator();
+        Iterator<Integer> nextIdIterator = availableBusesByIDs.iterator();
 
         while ( nextIdIterator.hasNext() ) {
 
@@ -55,11 +58,12 @@ public class SinglePassengerStrategy implements Strategy{
 
     public void assignBuses(){
 
-        while ( !passengerQueue.isEmpty() && !availableBusIDs.isEmpty() ) {
+        while ( !passengerQueue.isEmpty() && !availableBusesByIDs.isEmpty() ) {
 
             Passenger myPassenger = passengerQueue.poll();
             int closestBusID = getClosestAvailableBusID(myPassenger).get();
             this.assignItinerary( closestBusID, myPassenger );
+            assignedBusesByIDs.add(closestBusID);
         }
     }
 

@@ -17,9 +17,10 @@ public class UniformTimeTableFactoryTest {
         int height = 157;
         int numPass = 100;
         int numBuses = 10;
+        int busCapacity = 1;
         int numTurns = 100;
 
-        ScenarioDefinition myScenDef = new ScenarioDefinition( length, height, numPass, numBuses, numTurns);
+        ScenarioDefinition myScenDef = new ScenarioDefinition( length, height, numPass, numBuses, busCapacity, numTurns);
 
         PassengerTimeTableFactory myFactory= new PassengerTimeTableFactory();
 

@@ -14,7 +14,7 @@ public class PassengerTimeTableFactoryTest {
     @Test
     public void createDistribution() throws Exception {
 
-        ScenarioDefinition myScenDef = new ScenarioDefinition( 139, 157, 100, 10, 100);
+        ScenarioDefinition myScenDef = new ScenarioDefinition( 139, 157, 100, 10, 1, 100);
         NormalLocation mySpawn = new NormalLocation(27, 32, 10);
         NormalLocation myDestination = new NormalLocation(109, 128, 15);
         NormalDistributionDefinition myDistDef = NormalDistributionDefinition.createNormalDistDef(mySpawn, myDestination, 30, 10);

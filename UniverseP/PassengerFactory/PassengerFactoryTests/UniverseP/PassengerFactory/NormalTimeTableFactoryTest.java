@@ -17,9 +17,10 @@ public class NormalTimeTableFactoryTest {
         int height = 157;
         int numPass = 100;
         int numBuses = 10;
+        int busCapacity = 1;
         int numTurns = 100;
 
-        ScenarioDefinition myScenDef = new ScenarioDefinition( length, height, numPass, numBuses, numTurns);
+        ScenarioDefinition myScenDef = new ScenarioDefinition( length, height, numPass, numBuses, busCapacity, numTurns);
         NormalLocation mySpawn = new NormalLocation(27, 32, 10);
         NormalLocation myDestination = new NormalLocation(109, 128, 15);
         NormalDistributionDefinition myDistDef = NormalDistributionDefinition.createNormalDistDef(mySpawn, myDestination, 30, 10);

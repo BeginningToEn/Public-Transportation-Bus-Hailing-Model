@@ -7,4 +7,5 @@ import java.util.Set;
  */
 public interface Strategy {
     void assignBuses();
+
 }

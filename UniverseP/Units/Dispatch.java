@@ -19,15 +19,13 @@ public class Dispatch {
     private Set<Integer> assignedBuses;
     private Map<Integer, Passenger> allPassengers;
     private Queue<Passenger> passengerQueue;
-    private int busCapacity;
 
-    public Dispatch(Map<Integer, Bus> allBuses, Queue<Passenger> passengerQueue, int busCapacity){
+    public Dispatch(Map<Integer, Bus> allBuses, Queue<Passenger> passengerQueue){
         this.myStrategy = new SinglePassengerStrategy(allBuses, availableBusIDs, passengerQueue);
         this.allBuses = allBuses;
         this.availableBusIDs = allBuses.keySet();
         this.assignedBuses = new HashSet<>();
         this.passengerQueue = new ConcurrentLinkedQueue();
-        this.busCapacity = busCapacity;
     }
 
     public void moveBuses(){
@@ -37,7 +35,9 @@ public class Dispatch {
     }
 
     public void checkIfArrived(){
-
+        for (Integer myIterator : assignedBuses){
+            //allBuses.get(myIterator).checkIfArrived();
+        }
     }
 
     //use assignPassengers function when passengerQueue is not empty
@@ -48,7 +48,11 @@ public class Dispatch {
     }
 
     public void updateAvailBuses() {
-
+        for ( Integer assignedBusID : assignedBuses ) {
+            //if (allBuses.get(assignedBusID).isEmpty()) {
+             //   availableBusIDs.add(assignedBusID);
+            //}
+        }
     }
 
 }

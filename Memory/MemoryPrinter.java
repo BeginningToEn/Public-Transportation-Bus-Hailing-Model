@@ -5,9 +5,9 @@ package Memory;
  */
 public class MemoryPrinter {
 
-    private UniverseMemory myMemory;
+    private ScenarioMemory myMemory;
 
-    public MemoryPrinter(UniverseMemory inputMemory){
+    public MemoryPrinter(ScenarioMemory inputMemory){
         this.myMemory = inputMemory;
     }
 

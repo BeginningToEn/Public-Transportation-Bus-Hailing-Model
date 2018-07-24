@@ -35,10 +35,6 @@ public class Bus {
         }
     }
 
-    public Integer getID() {
-        return ID;
-    }
-
     public Itinerary getItinerary() {
         return myItinerary;
     }
@@ -47,12 +43,28 @@ public class Bus {
         this.myItinerary = myItinerary;
     }
 
-    public void update(){
-        for (Passenger it : passengersToPickUp) {
-            if (it.getSpawn() == currentLocation){
+    public boolean isAtActionableLocation() {
 
-            }
+        if ( currentLocation.equals(myItinerary.peek()) ) {
+            return true;
         }
+        return false;
+    }
+
+    public void replyToPing() {
+        if ( this.isAtActionableLocation() ) {
+            //positiveResponse
+        } else {
+            //return empty response
+        }
+    }
+
+    private void negativePingResp() {
+
+    }
+
+    private void positivePingResp() {
+
     }
 
     @Override
