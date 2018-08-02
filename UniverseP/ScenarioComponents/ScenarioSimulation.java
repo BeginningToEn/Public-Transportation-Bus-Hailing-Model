@@ -71,19 +71,19 @@ public class ScenarioSimulation {
 
         ScenarioSimulation output = new ScenarioSimulation(myDef, mySource, allBuses);
 
-        //for ( int i = 0; i < myDef.getNumTurns(); i++) {
-            output.updatePassengers();
+        for ( int turn = 0; turn < myDef.getNumTurns(); turn++) {
+            output.updatePassengers(turn);
             output.assignBuses();
             output.moveBuses();
             output.onboardPassengers();
             output.deboardPassengers();
-        //}
+        }
 
         return output;
     }
 
-    private void updatePassengers() {
-        for ( Passenger it : mySource.getPassengers() ) {
+    private void updatePassengers(int turn) {
+        for ( Passenger it : mySource.getPassengers(turn) ) {
             myQueue.offer(it);
         }
     }

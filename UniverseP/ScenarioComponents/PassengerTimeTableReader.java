@@ -10,11 +10,9 @@ import java.util.List;
  */
 public class PassengerTimeTableReader implements PassengerSource {
 
-    private int time;
     private PassengerTimeTable myTable;
 
     public PassengerTimeTableReader( PassengerTimeTable myTable) {
-        this.time = 0;
         this.myTable = myTable;
     }
 
@@ -22,11 +20,11 @@ public class PassengerTimeTableReader implements PassengerSource {
         return myTable.getMyDef();
     }
 
-    @Override
-    public List<Passenger> getPassengers() {
+    /*public List<Passenger> getPassengers() {
         return myTable.get(time++);
-    }
+    }*/
 
+    @Override
     public List<Passenger> getPassengers(int specificTime) {
         return myTable.get(specificTime);
     }
