@@ -58,11 +58,14 @@ public class Main {
     public static void testItinerary(){
         Bus myBus = new Bus(1, new Location(0,0));
         Bus myBus2 = new Bus(2, new Location(20,20));
+        Set<Integer> allAvailableBusesByID = new HashSet<>();
+        allAvailableBusesByID.add(1);
+        allAvailableBusesByID.add(2);
         Map<Integer, Bus> allBuses = new HashMap<>();
         allBuses.put(1, myBus);
         Queue<Passenger> passengerQueue = new ConcurrentLinkedQueue<>();
         passengerQueue.offer(new Passenger(1, 1, 1, 2, 2, 0));
-        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, passengerQueue);
+        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, allAvailableBusesByID,passengerQueue);
 
         System.out.println(myBus.getItinerary().isEmpty());
 

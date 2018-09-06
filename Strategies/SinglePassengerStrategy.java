@@ -16,10 +16,9 @@ public class SinglePassengerStrategy implements Strategy{
     private Queue<Passenger> passengerQueue;
 
     public SinglePassengerStrategy(Map<Integer, Bus> allBuses, Set<Integer> availableBusesByIDs,
-                                   Set<Integer> assignedBusesByIDs, Queue<Passenger> passengerQueue){
+                                   Queue<Passenger> passengerQueue){
         this.allBuses = allBuses;
         this.availableBusesByIDs = availableBusesByIDs;
-        this.assignedBusesByIDs = assignedBusesByIDs;
         this.passengerQueue = passengerQueue;
     }
 
@@ -58,6 +57,8 @@ public class SinglePassengerStrategy implements Strategy{
 
     public void assignBuses(){
 
+        assignedBusesByIDs = new HashSet<>();
+
         while ( !passengerQueue.isEmpty() && !availableBusesByIDs.isEmpty() ) {
 
             Passenger myPassenger = passengerQueue.poll();
@@ -65,6 +66,10 @@ public class SinglePassengerStrategy implements Strategy{
             this.assignItinerary( closestBusID, myPassenger );
             assignedBusesByIDs.add(closestBusID);
         }
+    }
+
+    public Set<Integer> getAssignedBusesIDs(){
+        return assignedBusesByIDs;
     }
 
 }

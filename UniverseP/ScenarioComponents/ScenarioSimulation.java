@@ -64,7 +64,7 @@ public class ScenarioSimulation {
         this.passengersToPickUpByID = new HashSet<>();
         this.passengersEnRouteByID = new HashSet<>();
         this.deliveredPassengersByID = new HashSet<>();
-        this.myStrat = new SinglePassengerStrategy(allBuses, availableBusesByIDs, assignedBusesByID, myQueue);  //this should be a var
+        this.myStrat = new SinglePassengerStrategy(allBuses, availableBusesByIDs, myQueue);  //this should be a var
     }
 
     public static ScenarioSimulation simulate(ScenarioDefinition myDef, PassengerSource mySource, BusTable allBuses /*an enum for strat should go here*/){
