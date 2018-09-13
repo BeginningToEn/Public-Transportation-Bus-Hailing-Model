@@ -4,6 +4,7 @@ import Strategies.SinglePassengerStrategy;
 import Strategies.Strategy;
 import UniverseP.BusFactory.BusTable;
 import UniverseP.Units.Bus;
+import UniverseP.Units.BusCoordinator;
 import UniverseP.Units.Passenger;
 
 import java.util.Map;
@@ -44,8 +45,7 @@ public class ScenarioSimulation {
     private Strategy myStrat;
     private int turn;
 
-    private Set<Integer> availableBusesByIDs;
-    private Set<Integer> assignedBusesByID;
+    private BusCoordinator myCoordinator;
     private Set<Integer> allPassengersByID;
     private Set<Integer> passengersToPickUpByID;
     private Set<Integer> passengersEnRouteByID;
@@ -58,13 +58,12 @@ public class ScenarioSimulation {
         this.allBuses = allBuses;
         this.turn = 0;
 
-        this.availableBusesByIDs = new HashSet<>();
-        this.assignedBusesByID = new HashSet<>();
+        this.myCoordinator = BusCoordinator.createBusCoordinator(allBuses.keySet());
         this.allPassengersByID = new HashSet<>();
         this.passengersToPickUpByID = new HashSet<>();
         this.passengersEnRouteByID = new HashSet<>();
         this.deliveredPassengersByID = new HashSet<>();
-        this.myStrat = new SinglePassengerStrategy(allBuses, availableBusesByIDs, myQueue);  //this should be a var
+        this.myStrat = new SinglePassengerStrategy(allBuses, myCoordinator, myQueue);  //this should be a var
     }
 
     public static ScenarioSimulation simulate(ScenarioDefinition myDef, PassengerSource mySource, BusTable allBuses /*an enum for strat should go here*/){

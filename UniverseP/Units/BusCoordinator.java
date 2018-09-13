@@ -18,9 +18,9 @@ public class BusCoordinator {
         this.assignedBusesByID  = new HashSet<>();
     }
 
-    public BusCoordinator createBusCoordinator(Set<Integer> allBusesByIDs) {
+    public static BusCoordinator createBusCoordinator(Set<Integer> allBusesByIDs) {
         BusCoordinator output = new BusCoordinator(allBusesByIDs);
-        output.moreAssignments(allBusesByIDs);      //on creation all buses are available
+        output.recordAvailable(allBusesByIDs);      //on creation all buses are available
         return output;
     }
 
@@ -33,18 +33,32 @@ public class BusCoordinator {
     }
 
     //updates lists when more assignments are made
-    public void moreAssignments(Set<Integer> additionalAssignments) {
+    public void recordAssignments(Set<Integer> additionalAssignments) {
         for(int BusID : additionalAssignments){
             this.assignedBusesByID.add(BusID);
             this.availableBusesByIDs.remove(BusID);
         }
     }
 
+    public void recordAssignments(int additionalAssigned) {
+        this.assignedBusesByID.add(additionalAssigned);
+        this.availableBusesByIDs.remove(additionalAssigned);
+    }
+
     //updates lists when buses become available
-    public void lessAssignments(Set<Integer> additionalAvailable){
+    public void recordAvailable(Set<Integer> additionalAvailable){
         for(int BusID : additionalAvailable){
             this.assignedBusesByID.remove(BusID);
             this.availableBusesByIDs.add(BusID);
         }
+    }
+
+    public void recordAvailable(int additionalAvailable){
+        this.assignedBusesByID.remove(additionalAvailable);
+        this.availableBusesByIDs.add(additionalAvailable);
+    }
+
+    public boolean busAvailable(){
+        return !availableBusesByIDs.isEmpty();
     }
 }

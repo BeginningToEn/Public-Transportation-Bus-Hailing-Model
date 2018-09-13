@@ -2,6 +2,7 @@ package Strategies;
 
 import UniverseP.ScenarioComponents.ScenarioDefinition;
 import UniverseP.Units.Bus;
+import UniverseP.Units.BusCoordinator;
 import UniverseP.Units.Itinerary;
 import UniverseP.Units.Passenger;
 
@@ -11,14 +12,13 @@ import java.util.*;
 //If a bus is en route to pick up passengers and a bus that is closer becomes available assignments should change
 public class SinglePassengerStrategy implements Strategy{
     private Map<Integer, Bus> allBuses;
-    private Set<Integer> availableBusesByIDs;
-    private Set<Integer> assignedBusesByIDs;
+    private BusCoordinator myCoordinator;
     private Queue<Passenger> passengerQueue;
 
-    public SinglePassengerStrategy(Map<Integer, Bus> allBuses, Set<Integer> availableBusesByIDs,
+    public SinglePassengerStrategy(Map<Integer, Bus> allBuses, BusCoordinator myCoordinator,
                                    Queue<Passenger> passengerQueue){
         this.allBuses = allBuses;
-        this.availableBusesByIDs = availableBusesByIDs;
+        this.myCoordinator = myCoordinator;
         this.passengerQueue = passengerQueue;
     }
 
@@ -29,18 +29,16 @@ public class SinglePassengerStrategy implements Strategy{
 
         Optional<Integer> closestID = Optional.empty();
         int smallestDistance = Integer.MAX_VALUE;
-        Bus iteratorBus;
-        int distance;
 
         int nextID;
-        Iterator<Integer> nextIdIterator = availableBusesByIDs.iterator();
+        Iterator<Integer> nextIdIterator = myCoordinator.getAvailable().iterator();
 
         while ( nextIdIterator.hasNext() ) {
 
             nextID = nextIdIterator.next();
-            iteratorBus = allBuses.get(nextID);
+            Bus iteratorBus = allBuses.get(nextID);
 
-            distance = ScenarioDefinition.getDistance(myPassenger.getSpawn(), iteratorBus.getLocation());
+            int distance = ScenarioDefinition.getDistance(myPassenger.getSpawn(), iteratorBus.getLocation());
             if ( distance < smallestDistance ) {
                 smallestDistance = distance;
                 closestID = Optional.of(nextID);
@@ -57,19 +55,13 @@ public class SinglePassengerStrategy implements Strategy{
 
     public void assignBuses(){
 
-        assignedBusesByIDs = new HashSet<>();
-
-        while ( !passengerQueue.isEmpty() && !availableBusesByIDs.isEmpty() ) {
+        while ( !passengerQueue.isEmpty() && myCoordinator.busAvailable() ) {
 
             Passenger myPassenger = passengerQueue.poll();
             int closestBusID = getClosestAvailableBusID(myPassenger).get();
             this.assignItinerary( closestBusID, myPassenger );
-            assignedBusesByIDs.add(closestBusID);
+            myCoordinator.recordAssignments(closestBusID);
         }
-    }
-
-    public Set<Integer> getAssignedBusesIDs(){
-        return assignedBusesByIDs;
     }
 
 }

@@ -24,7 +24,9 @@ public class SinglePassengerStrategyTest {
         Queue<Passenger> passengerQueue = new ConcurrentLinkedQueue<>();
         passengerQueue.offer(new Passenger(1, 1, 1, 2, 2, 0));
 
-        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, allBuses.keySet(), passengerQueue);
+        BusCoordinator myCoordinator = BusCoordinator.createBusCoordinator(allBuses.keySet());
+
+        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, myCoordinator, passengerQueue);
 
         assertTrue(myBus.getItinerary().isEmpty());
 
@@ -52,10 +54,12 @@ public class SinglePassengerStrategyTest {
         allBuses.put(2, myBus2);
         allBuses.put(3, myBus3);
 
+        BusCoordinator myCoordinator = BusCoordinator.createBusCoordinator(allBuses.keySet());
+
         Queue<Passenger> passengerQueue = new ConcurrentLinkedQueue<>();
         passengerQueue.offer(new Passenger(1, 17, 9, 2, 2, 0));
 
-        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, allBuses.keySet(), passengerQueue);
+        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, myCoordinator, passengerQueue);
 
         assertTrue(myBus1.getItinerary().isEmpty());
         assertTrue(myBus2.getItinerary().isEmpty());
@@ -81,12 +85,14 @@ public class SinglePassengerStrategyTest {
         allBuses.put(1, myBus1);
         allBuses.put(2, myBus2);
 
+        BusCoordinator myCoordinator = BusCoordinator.createBusCoordinator(allBuses.keySet());
+
         Queue<Passenger> passengerQueue = new ConcurrentLinkedQueue<>();
         passengerQueue.offer(new Passenger(1, 17, 18, 2, 2, 0));
         passengerQueue.offer(new Passenger(2, 35, 35, 6, 7, 0));
         passengerQueue.offer(new Passenger(3, 10, 10, 2, 2, 0));
 
-        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, allBuses.keySet(), passengerQueue);
+        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, myCoordinator, passengerQueue);
 
         assertTrue(myBus1.getItinerary().isEmpty());
         assertTrue(myBus2.getItinerary().isEmpty());

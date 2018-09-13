@@ -21,7 +21,8 @@ public class Main {
     public static void main(String[] args) {
 
         //testPassengerCreation();
-        testItinerary();
+        //testItinerary();
+        test();
 
 
 
@@ -58,14 +59,17 @@ public class Main {
     public static void testItinerary(){
         Bus myBus = new Bus(1, new Location(0,0));
         Bus myBus2 = new Bus(2, new Location(20,20));
-        Set<Integer> allAvailableBusesByID = new HashSet<>();
-        allAvailableBusesByID.add(1);
-        allAvailableBusesByID.add(2);
+
+
         Map<Integer, Bus> allBuses = new HashMap<>();
         allBuses.put(1, myBus);
+        //allBuses.put(2, myBus2);
+
+        BusCoordinator myCoordinator = BusCoordinator.createBusCoordinator(allBuses.keySet());
+
         Queue<Passenger> passengerQueue = new ConcurrentLinkedQueue<>();
         passengerQueue.offer(new Passenger(1, 1, 1, 2, 2, 0));
-        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, allAvailableBusesByID,passengerQueue);
+        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, myCoordinator, passengerQueue);
 
         System.out.println(myBus.getItinerary().isEmpty());
 
@@ -79,5 +83,34 @@ public class Main {
         System.out.println("Bus 2: " + myBus2.getItinerary().isEmpty());
         ActionableLocation myLoc = new PickUpLocation(1,1,1);
         System.out.println(myLoc.getClass());
+    }
+
+    public static void test() {
+
+        Bus myBus = new Bus(1, new Location(0,0));
+        Map<Integer, Bus> allBuses = new HashMap<>();
+        allBuses.put(1, myBus);
+
+        Queue<Passenger> passengerQueue = new ConcurrentLinkedQueue<>();
+        passengerQueue.offer(new Passenger(1, 1, 1, 2, 2, 0));
+
+        BusCoordinator myCoordinator = BusCoordinator.createBusCoordinator(allBuses.keySet());
+
+        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, myCoordinator, passengerQueue);
+
+        //assertTrue(myBus.getItinerary().isEmpty());
+
+        myStrat.assignBuses();
+
+        System.out.println(myBus.getItinerary().peek());
+
+        //assertEquals(new PickUpLocation(1,1,1), myBus.getItinerary().peek());
+
+        Bus myBus2 = new Bus(2, new Location(15,8));
+        Bus myBus3 = new Bus(3, new Location(20,20));
+        allBuses.put(2, myBus2);
+        allBuses.put(3, myBus3);
+        passengerQueue.offer(new Passenger(2, 17, 9, 2, 2, 0));
+
     }
 }

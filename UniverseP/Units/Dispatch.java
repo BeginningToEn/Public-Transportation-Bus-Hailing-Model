@@ -11,12 +11,14 @@ import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Dispatch {
+    /*
     //needs to maintain an up to date available buses list for UberStrategy;
 
     private Strategy myStrategy;
     private Map<Integer, Bus> allBuses;
     private Set<Integer> availableBusIDs;
     private Set<Integer> assignedBuses;
+    private BusCoordinator myCoordinator;
     private Map<Integer, Passenger> allPassengers;
     private Queue<Passenger> passengerQueue;
 
@@ -54,5 +56,5 @@ public class Dispatch {
             //}
         }
     }
-
+*/
 }
