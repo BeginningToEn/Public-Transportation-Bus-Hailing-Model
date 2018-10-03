@@ -25,7 +25,7 @@ public class PickUpLocation extends ActionableLocation {
 
     @Override
     public String toString() {
-        return "PickUp: (" + this.getX() + "," + this.getY() + "), ID: " + this.getPassengerID();
+        return "PickUp- PassID: " + this.getPassengerID() +  " (" + this.getX() + "," + this.getY() + ")";
     }
 
     @Override

@@ -22,7 +22,9 @@ public class Main {
 
         //testPassengerCreation();
         //testItinerary();
-        test();
+        //testItineraryEmpty();
+        //test();
+        testSim();
 
 
 
@@ -56,6 +58,14 @@ public class Main {
         myTable.printAllPassengers();
     }
 
+    public static void testItineraryEmpty(){
+        Itinerary myItinerary = Itinerary.createEmptyItinerary();
+        System.out.println("Expect True: " + myItinerary.isEmpty());
+
+        Itinerary myItinerary2 = Itinerary.createDirectItinerary(new Passenger(1, 1, 1, 2, 2, 0));
+        System.out.println("Expect False: " + myItinerary2.isEmpty());
+    }
+
     public static void testItinerary(){
         Bus myBus = new Bus(1, new Location(0,0));
         Bus myBus2 = new Bus(2, new Location(20,20));
@@ -63,7 +73,7 @@ public class Main {
 
         Map<Integer, Bus> allBuses = new HashMap<>();
         allBuses.put(1, myBus);
-        //allBuses.put(2, myBus2);
+        allBuses.put(2, myBus2);
 
         BusCoordinator myCoordinator = BusCoordinator.createBusCoordinator(allBuses.keySet());
 
@@ -75,6 +85,7 @@ public class Main {
 
         myStrat.assignBuses();
 
+        System.out.println(myBus.getItinerary().isEmpty());
         System.out.println(myBus.getItinerary().peek().getClass());
         System.out.println(new PickUpLocation(1,1,1).equals(myBus.getItinerary().peek()) + "\n");
 
@@ -112,5 +123,27 @@ public class Main {
         allBuses.put(3, myBus3);
         passengerQueue.offer(new Passenger(2, 17, 9, 2, 2, 0));
 
+    }
+
+    public static void testSim(){
+
+        //create definition that defines grid, busCapacity, numTurns, and can be used to create bus and pass tables
+        ScenarioDefinition myDef = new ScenarioDefinition(100,100,1,1,1,1);
+
+        //create a custom bus table and use it to create a BusCoordinator
+        Bus myBus = new Bus(1, new Location(0,0));
+        BusTable allBuses = new BusTable(myDef);
+        allBuses.put(1, myBus);
+        BusCoordinator myCoordinator = BusCoordinator.createBusCoordinator(allBuses.keySet());
+
+        //Create a passenger source which here takes the form of a PassengerTimeTableReader but can be other things
+        PassengerTimeTable myPassTTable = new PassengerTimeTable();
+        List<Passenger> spawnAtZero = new ArrayList<>();
+        spawnAtZero.add(new Passenger(1, 1, 1, 2, 2, 0));
+        myPassTTable.put(0, spawnAtZero);   //need to check what the key is supposed to be, right now key = spawn turn
+        PassengerSource mySource = new PassengerTimeTableReader(myPassTTable);
+
+
+        ScenarioSimulation.simulate(myDef, mySource, allBuses);
     }
 }

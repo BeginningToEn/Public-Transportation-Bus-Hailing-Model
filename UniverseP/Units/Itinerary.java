@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentLinkedDeque;
  * The class is a wrapper around a queue of all the pick up and drop of locations in the order they are visited
  */
 
-public class Itinerary extends ConcurrentLinkedDeque<ActionableLocation>{
+public class Itinerary{
     private Queue<ActionableLocation> destinationQueue;
 
     public Itinerary() {
@@ -27,12 +27,38 @@ public class Itinerary extends ConcurrentLinkedDeque<ActionableLocation>{
         return output;
     }
 
+    public static Itinerary createEmptyItinerary(){
+        return new Itinerary();
+    }
+
+    public boolean isEmpty(){
+        return destinationQueue.isEmpty();
+    }
+
+    public ActionableLocation poll(){
+        return destinationQueue.poll();
+    }
+
+    public ActionableLocation peek(){
+        return destinationQueue.peek();
+    }
+
+    public boolean offer(ActionableLocation e){
+        return destinationQueue.offer(e);
+    }
+
+    public Object[] toArray(){
+        return destinationQueue.toArray();
+    }
+
+
     @Override
     public String toString(){
-        String output = "";
+        String output = " ---Itinerary: ";
         for(Object iterator : this.toArray()) {
             output += (ActionableLocation) iterator + " ";
         }
         return output;
     }
+
 }

@@ -32,6 +32,7 @@ public class SinglePassengerStrategyTest {
 
         myStrat.assignBuses();
 
+        assertFalse(myBus.getItinerary().isEmpty());
         assertEquals(new PickUpLocation(1,1,1), myBus.getItinerary().peek());
 
         Bus myBus2 = new Bus(2, new Location(15,8));
@@ -61,6 +62,7 @@ public class SinglePassengerStrategyTest {
 
         SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, myCoordinator, passengerQueue);
 
+        //assignment has not occured yet so all buses should have no itinerary
         assertTrue(myBus1.getItinerary().isEmpty());
         assertTrue(myBus2.getItinerary().isEmpty());
         assertTrue(myBus3.getItinerary().isEmpty());

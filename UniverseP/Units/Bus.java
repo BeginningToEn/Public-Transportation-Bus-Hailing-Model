@@ -1,5 +1,6 @@
 package UniverseP.Units;
 
+import java.util.Optional;
 import java.util.Set;
 
 public class Bus {
@@ -12,7 +13,7 @@ public class Bus {
     public Bus(int ID, Location currentLocation){
         this.ID = ID;
         this.currentLocation = currentLocation;
-        this.myItinerary = new Itinerary();
+        this.myItinerary = Itinerary.createEmptyItinerary();
     }
 
     public Location getLocation() {
@@ -24,6 +25,11 @@ public class Bus {
     }
 
     public void move(){
+
+        if (myItinerary.isEmpty()){
+            return;
+        }
+
         if (currentLocation.getX() < myItinerary.peek().getX()) {
             currentLocation.moveDown();
         } else if (currentLocation.getX() > myItinerary.peek().getX()) {
@@ -69,6 +75,6 @@ public class Bus {
 
     @Override
     public String toString(){
-        return "ID: " + ID + " Current Location: " + currentLocation;
+        return "BusID: " + ID + ", Bus Location: " + currentLocation + myItinerary;
     }
 }

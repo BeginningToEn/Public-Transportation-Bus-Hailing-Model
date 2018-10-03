@@ -70,6 +70,8 @@ public class ScenarioSimulation {
 
         ScenarioSimulation output = new ScenarioSimulation(myDef, mySource, allBuses);
 
+        output.printReport();
+
         for ( int turn = 0; turn < myDef.getNumTurns(); turn++) {
             output.updatePassengers(turn);
             output.assignBuses();
@@ -77,6 +79,8 @@ public class ScenarioSimulation {
             output.onboardPassengers();
             output.deboardPassengers();
         }
+
+        output.printReport();
 
         return output;
     }
@@ -103,5 +107,12 @@ public class ScenarioSimulation {
 
     private void deboardPassengers(){
 
+    }
+
+    private void printReport(){
+        System.out.println("Turn: " + this.turn);
+        for (int it : allBuses.keySet()){
+            System.out.println(allBuses.get(it));
+        }
     }
 }
