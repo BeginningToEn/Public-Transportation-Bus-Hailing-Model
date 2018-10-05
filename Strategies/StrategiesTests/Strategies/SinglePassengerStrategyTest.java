@@ -35,12 +35,6 @@ public class SinglePassengerStrategyTest {
         assertFalse(myBus.getItinerary().isEmpty());
         assertEquals(new PickUpLocation(1,1,1), myBus.getItinerary().peek());
 
-        Bus myBus2 = new Bus(2, new Location(15,8));
-        Bus myBus3 = new Bus(3, new Location(20,20));
-        allBuses.put(2, myBus2);
-        allBuses.put(3, myBus3);
-        passengerQueue.offer(new Passenger(2, 17, 9, 2, 2, 0));
-
     }
 
     @Test   //tests that the closest bus is the one receiving the assignment

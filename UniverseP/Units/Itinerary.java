@@ -54,7 +54,7 @@ public class Itinerary{
 
     @Override
     public String toString(){
-        String output = " ---Itinerary: ";
+        String output = "";
         for(Object iterator : this.toArray()) {
             output += (ActionableLocation) iterator + " ";
         }

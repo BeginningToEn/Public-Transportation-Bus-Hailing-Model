@@ -4,6 +4,7 @@ import UniverseP.PassengerFactory.PassengerTimeTable;
 import UniverseP.Units.Passenger;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by EG OLIVER RC on 2/17/2018.
@@ -25,7 +26,13 @@ public class PassengerTimeTableReader implements PassengerSource {
     }*/
 
     @Override
-    public List<Passenger> getPassengers(int specificTime) {
-        return myTable.get(specificTime);
+    public Optional< List<Passenger> > getPassengers(int specificTime) {
+
+        //If no passengers are spawned at specificTime return an empty optional
+        if ( !myTable.keySet().contains(specificTime) ){
+            return Optional.empty();
+        }
+
+        return Optional.of(myTable.get(specificTime));
     }
 }

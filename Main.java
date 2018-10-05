@@ -128,7 +128,7 @@ public class Main {
     public static void testSim(){
 
         //create definition that defines grid, busCapacity, numTurns, and can be used to create bus and pass tables
-        ScenarioDefinition myDef = new ScenarioDefinition(100,100,1,1,1,1);
+        ScenarioDefinition myDef = new ScenarioDefinition(100,100,1,1,1,8);
 
         //create a custom bus table and use it to create a BusCoordinator
         Bus myBus = new Bus(1, new Location(0,0));
@@ -140,10 +140,14 @@ public class Main {
         PassengerTimeTable myPassTTable = new PassengerTimeTable();
         List<Passenger> spawnAtZero = new ArrayList<>();
         spawnAtZero.add(new Passenger(1, 1, 1, 2, 2, 0));
+        List<Passenger> spawnAtFive = new ArrayList<>();
+        spawnAtFive.add(new Passenger(1, 1, 1, 2, 2, 0));
         myPassTTable.put(0, spawnAtZero);   //need to check what the key is supposed to be, right now key = spawn turn
+        myPassTTable.put(5, spawnAtFive);
         PassengerSource mySource = new PassengerTimeTableReader(myPassTTable);
 
 
-        ScenarioSimulation.simulate(myDef, mySource, allBuses);
+        ScenarioSimulation mySim = ScenarioSimulation.setup(myDef, mySource, allBuses);
+        mySim.run();
     }
 }
