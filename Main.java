@@ -1,10 +1,7 @@
 import UniverseP.PassengerFactory.NormalDistributionDefinition;
 import UniverseP.PassengerFactory.NormalLocation;
 import UniverseP.PassengerFactory.PassengerTimeTableFactory;
-import UniverseP.ScenarioComponents.PassengerSource;
-import UniverseP.ScenarioComponents.PassengerTimeTableReader;
-import UniverseP.ScenarioComponents.ScenarioDefinition;
-import UniverseP.ScenarioComponents.ScenarioSimulation;
+import UniverseP.ScenarioSimulation.*;
 import UniverseP.BusFactory.BusTable;
 import UniverseP.PassengerFactory.PassengerTimeTable;
 import UniverseP.Units.*;

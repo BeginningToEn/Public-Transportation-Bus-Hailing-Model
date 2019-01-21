@@ -21,6 +21,7 @@ public class Bus {
         return currentLocation;
     }
     public int getID(){ return this.ID; }
+    public Set<Integer> getCurrentPassengers() { return this.currentPassengers;}
 
     public boolean isEmpty(){
         return currentPassengers.isEmpty();
@@ -55,7 +56,7 @@ public class Bus {
         return myItinerary;
     }
 
-    public void setMyItinerary(Itinerary myItinerary) {
+    public void setItinerary(Itinerary myItinerary) {
         this.myItinerary = myItinerary;
     }
 

@@ -1,4 +1,4 @@
-package UniverseP.ScenarioComponents;
+package UniverseP.ScenarioSimulation;
 
 import UniverseP.Units.Passenger;
 import java.util.List;

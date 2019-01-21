@@ -1,4 +1,4 @@
-package UniverseP.ScenarioComponents;
+package UniverseP.ScenarioSimulation;
 
 import UniverseP.Units.ActionableLocation;
 import UniverseP.Units.Location;
@@ -30,7 +30,7 @@ public class ScenarioDefinition {
         return Math.abs( a.getX() - b.getX() ) + Math.abs( a.getY() - b.getY() );
     }
 
-    public static int getDistance(ActionableLocation a, Location b){
+    public static int getDistance(ActionableLocation a, ActionableLocation b){
         return Math.abs( a.getX() - b.getX() ) + Math.abs( a.getY() - b.getY() );
     }
 

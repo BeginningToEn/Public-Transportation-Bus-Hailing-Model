@@ -1,10 +1,9 @@
-package UniverseP.ScenarioComponents;
+package UniverseP.ScenarioSimulation;
 
 import Strategies.SinglePassengerStrategy;
 import Strategies.Strategy;
 import UniverseP.BusFactory.BusTable;
 import UniverseP.Units.Bus;
-import UniverseP.Units.BusCoordinator;
 import UniverseP.Units.Passenger;
 
 import java.util.*;

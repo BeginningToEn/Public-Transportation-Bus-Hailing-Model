@@ -1,6 +1,6 @@
 package UniverseP.PassengerFactory;
 
-import UniverseP.ScenarioComponents.ScenarioDefinition;
+import UniverseP.ScenarioSimulation.ScenarioDefinition;
 
 
 public interface TimeTableFactory {

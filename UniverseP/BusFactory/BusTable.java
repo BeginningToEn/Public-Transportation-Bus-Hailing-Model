@@ -1,7 +1,7 @@
 package UniverseP.BusFactory;
 
 import UniverseP.Units.Bus;
-import UniverseP.ScenarioComponents.ScenarioDefinition;
+import UniverseP.ScenarioSimulation.ScenarioDefinition;
 
 import java.util.HashMap;
 

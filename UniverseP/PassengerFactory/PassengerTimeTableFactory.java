@@ -1,6 +1,6 @@
 package UniverseP.PassengerFactory;
 
-import UniverseP.ScenarioComponents.ScenarioDefinition;
+import UniverseP.ScenarioSimulation.ScenarioDefinition;
 
 //Creates PassengerTimeTables with pre-defined numTurns and grid dimensions
 

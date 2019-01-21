@@ -2,7 +2,7 @@ package UniverseP.BusFactory;
 
 import UniverseP.Units.Bus;
 import UniverseP.Units.Location;
-import UniverseP.ScenarioComponents.ScenarioDefinition;
+import UniverseP.ScenarioSimulation.ScenarioDefinition;
 
 import java.util.Random;
 

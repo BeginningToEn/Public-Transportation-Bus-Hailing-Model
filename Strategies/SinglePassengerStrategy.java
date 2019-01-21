@@ -1,8 +1,8 @@
 package Strategies;
 
-import UniverseP.ScenarioComponents.ScenarioDefinition;
+import UniverseP.ScenarioSimulation.ScenarioDefinition;
 import UniverseP.Units.Bus;
-import UniverseP.Units.BusCoordinator;
+import UniverseP.ScenarioSimulation.BusCoordinator;
 import UniverseP.Units.Itinerary;
 import UniverseP.Units.Passenger;
 
@@ -50,7 +50,7 @@ public class SinglePassengerStrategy implements Strategy{
 
     private void assignItinerary(int BusID, Passenger myPassenger) {
         Itinerary myItinerary = Itinerary.createDirectItinerary(myPassenger);
-        allBuses.get(BusID).setMyItinerary(myItinerary);
+        allBuses.get(BusID).setItinerary(myItinerary);
     }
 
     public void assignBuses(){

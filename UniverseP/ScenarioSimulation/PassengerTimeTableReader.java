@@ -1,4 +1,4 @@
-package UniverseP.ScenarioComponents;
+package UniverseP.ScenarioSimulation;
 
 import UniverseP.PassengerFactory.PassengerTimeTable;
 import UniverseP.Units.Passenger;
