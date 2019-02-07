@@ -20,10 +20,10 @@ public class Itinerary{
     }
 
     //Itinerary creation method used by the SinglePassengerStrat
-    public static Itinerary createDirectItinerary(Passenger myPassenger) {
+    public static Itinerary createDirectItinerary(Trip myTrip) {
         Itinerary output = new Itinerary();
-        output.offer(myPassenger.getSpawn());
-        output.offer(myPassenger.getDestination());
+        output.offer(myTrip.getSpawn());
+        output.offer(myTrip.getDestination());
         return output;
     }
 

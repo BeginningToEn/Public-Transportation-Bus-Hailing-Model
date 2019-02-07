@@ -22,12 +22,12 @@ public class SinglePassengerStrategyTest {
         Map<Integer, Bus> allBuses = new HashMap<>();
         allBuses.put(1, myBus);
 
-        Queue<Passenger> passengerQueue = new ConcurrentLinkedQueue<>();
-        passengerQueue.offer(new Passenger(1, 1, 1, 2, 2, 0));
+        Queue<Trip> tripQueue = new ConcurrentLinkedQueue<>();
+        tripQueue.offer(new Trip(1, 1, 1, 2, 2, 0));
 
         BusCoordinator myCoordinator = BusCoordinator.createBusCoordinator(allBuses.keySet());
 
-        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, myCoordinator, passengerQueue);
+        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, myCoordinator, tripQueue);
 
         assertTrue(myBus.getItinerary().isEmpty());
 
@@ -52,10 +52,10 @@ public class SinglePassengerStrategyTest {
 
         BusCoordinator myCoordinator = BusCoordinator.createBusCoordinator(allBuses.keySet());
 
-        Queue<Passenger> passengerQueue = new ConcurrentLinkedQueue<>();
-        passengerQueue.offer(new Passenger(1, 17, 9, 2, 2, 0));
+        Queue<Trip> tripQueue = new ConcurrentLinkedQueue<>();
+        tripQueue.offer(new Trip(1, 17, 9, 2, 2, 0));
 
-        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, myCoordinator, passengerQueue);
+        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, myCoordinator, tripQueue);
 
         //assignment has not occured yet so all buses should have no itinerary
         assertTrue(myBus1.getItinerary().isEmpty());
@@ -84,12 +84,12 @@ public class SinglePassengerStrategyTest {
 
         BusCoordinator myCoordinator = BusCoordinator.createBusCoordinator(allBuses.keySet());
 
-        Queue<Passenger> passengerQueue = new ConcurrentLinkedQueue<>();
-        passengerQueue.offer(new Passenger(1, 17, 18, 2, 2, 0));
-        passengerQueue.offer(new Passenger(2, 35, 35, 6, 7, 0));
-        passengerQueue.offer(new Passenger(3, 10, 10, 2, 2, 0));
+        Queue<Trip> tripQueue = new ConcurrentLinkedQueue<>();
+        tripQueue.offer(new Trip(1, 17, 18, 2, 2, 0));
+        tripQueue.offer(new Trip(2, 35, 35, 6, 7, 0));
+        tripQueue.offer(new Trip(3, 10, 10, 2, 2, 0));
 
-        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, myCoordinator, passengerQueue);
+        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, myCoordinator, tripQueue);
 
         assertTrue(myBus1.getItinerary().isEmpty());
         assertTrue(myBus2.getItinerary().isEmpty());
@@ -102,6 +102,6 @@ public class SinglePassengerStrategyTest {
         assertEquals(new DropOffLocation(6,7,2), myBus1.getItinerary().poll());
         assertEquals(new PickUpLocation(17,18,1), myBus2.getItinerary().poll());
         assertEquals(new DropOffLocation(2,2,1), myBus2.getItinerary().poll());
-        assertFalse(passengerQueue.isEmpty());
+        assertFalse(tripQueue.isEmpty());
     }
 }

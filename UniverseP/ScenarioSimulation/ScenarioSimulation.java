@@ -4,7 +4,8 @@ import Strategies.SinglePassengerStrategy;
 import Strategies.Strategy;
 import UniverseP.BusFactory.BusTable;
 import UniverseP.Units.Bus;
-import UniverseP.Units.Passenger;
+import UniverseP.Units.Itinerary;
+import UniverseP.Units.Trip;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -36,7 +37,7 @@ public class ScenarioSimulation {
 
     private ScenarioDefinition myDef;
     private PassengerSource mySource;
-    private Queue<Passenger> myQueue;
+    private Queue<Trip> myQueue;
     private BusTable allBuses;
     private Strategy myStrat;
     private int turn;
@@ -50,7 +51,7 @@ public class ScenarioSimulation {
     private ScenarioSimulation(ScenarioDefinition myDef, PassengerSource mySource, BusTable allBuses /*an enum for strat should go here*/ ){
         this.myDef = myDef;
         this.mySource = mySource;
-        this.myQueue = new ConcurrentLinkedQueue<Passenger>();
+        this.myQueue = new ConcurrentLinkedQueue<Trip>();
         this.allBuses = allBuses;
         this.turn = 0;
 
@@ -69,8 +70,9 @@ public class ScenarioSimulation {
     public void run(){
 
         while ( this.turn < myDef.getNumTurns() ) {
-            this.updatePassengers(this.turn);
-            this.assignBuses();
+            this.updatePickupQueue(this.turn);
+            Map<Integer,Trip> assignments = this.createAssignments();
+            this.assignBuses(assignments);
             this.moveBuses();
             this.handlePassengers();
             this.updateBusCoordinator();
@@ -81,41 +83,29 @@ public class ScenarioSimulation {
 
     }
 
-    /*
-    public static ScenarioSimulation simulate(ScenarioDefinition myDef, PassengerSource mySource, BusTable allBuses /*an enum for strat should go here){
-
-        ScenarioSimulation output = new ScenarioSimulation(myDef, mySource, allBuses);
-
-        System.out.println("Start: ");
-        output.printReport();
-        System.out.println();
-
-        for ( int turn = 0; turn < myDef.getNumTurns(); turn++) {
-            output.updatePassengers(turn);
-            output.assignBuses();
-            output.moveBuses();
-            output.handlePassengers();
-
-            output.printReport();
-        }
-
-        System.out.println("\nEnd: ");
-        output.printReport();
-
-        return output;
-    }*/
-
-    private void updatePassengers(int turn) {
+    private void updatePickupQueue(int turn) {
 
         if ( !mySource.getPassengers(turn).isPresent() ){ return; }
 
-        for ( Passenger it : mySource.getPassengers(turn).get() ) {
+        for ( Trip it : mySource.getPassengers(turn).get() ) {
             myQueue.offer(it);
         }
     }
 
-    private void assignBuses() {
-        myStrat.assignBuses();
+    private Map<Integer,Trip> createAssignments(){
+        return myStrat.createAssignments();
+    }
+
+    private void assignItinerary(int BusID, Trip myTrip) {
+        Itinerary myItinerary = Itinerary.createDirectItinerary(myTrip);
+        allBuses.get(BusID).setItinerary(myItinerary);
+    }
+
+    private void assignBuses(Map<Integer,Trip> assignments) {
+
+        for(int busID : assignments.keySet()) {
+            assignItinerary(busID, assignments.get(busID));
+        }
     }
 
     private void moveBuses() {
@@ -136,7 +126,7 @@ public class ScenarioSimulation {
         for ( int it : myCoordinator.getAssigned() ){
             Bus iteratorBus = allBuses.get(it);
             if(iteratorBus.isUnassigned()){
-                myCoordinator.recordAvailable(iteratorBus.getID());
+                myCoordinator.recordAvailable(iteratorBus.getBusID());
             }
         }
     }

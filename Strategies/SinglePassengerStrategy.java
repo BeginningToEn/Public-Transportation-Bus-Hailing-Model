@@ -4,7 +4,7 @@ import UniverseP.ScenarioSimulation.ScenarioDefinition;
 import UniverseP.Units.Bus;
 import UniverseP.ScenarioSimulation.BusCoordinator;
 import UniverseP.Units.Itinerary;
-import UniverseP.Units.Passenger;
+import UniverseP.Units.Trip;
 
 import java.util.*;
 
@@ -13,19 +13,19 @@ import java.util.*;
 public class SinglePassengerStrategy implements Strategy{
     private Map<Integer, Bus> allBuses;
     private BusCoordinator myCoordinator;
-    private Queue<Passenger> passengerQueue;
+    private Queue<Trip> pickupQueue;
 
     public SinglePassengerStrategy(Map<Integer, Bus> allBuses, BusCoordinator myCoordinator,
-                                   Queue<Passenger> passengerQueue){
+                                   Queue<Trip> pickupQueue){
         this.allBuses = allBuses;
         this.myCoordinator = myCoordinator;
-        this.passengerQueue = passengerQueue;
+        this.pickupQueue = pickupQueue;
     }
 
     //returns the ID of the bus closest that carries no passengers
     //we return busID instead of buses to make it easier to deal case where no bus is available
     //if no bus is available  we return an empty optional
-    private Optional<Integer> getClosestAvailableBusID(Passenger myPassenger){
+    private Optional<Integer> getClosestAvailableBusID(Trip myTrip){
 
         Optional<Integer> closestID = Optional.empty();
         int smallestDistance = Integer.MAX_VALUE;
@@ -38,7 +38,7 @@ public class SinglePassengerStrategy implements Strategy{
             nextID = nextIdIterator.next();
             Bus iteratorBus = allBuses.get(nextID);
 
-            int distance = ScenarioDefinition.getDistance(myPassenger.getSpawn(), iteratorBus.getLocation());
+            int distance = ScenarioDefinition.getDistance(myTrip.getSpawn(), iteratorBus.getLocation());
             if ( distance < smallestDistance ) {
                 smallestDistance = distance;
                 closestID = Optional.of(nextID);
@@ -48,20 +48,34 @@ public class SinglePassengerStrategy implements Strategy{
         return closestID;
     }
 
-    private void assignItinerary(int BusID, Passenger myPassenger) {
-        Itinerary myItinerary = Itinerary.createDirectItinerary(myPassenger);
+    private void assignItinerary(int BusID, Trip myTrip) {
+        Itinerary myItinerary = Itinerary.createDirectItinerary(myTrip);
         allBuses.get(BusID).setItinerary(myItinerary);
     }
 
     public void assignBuses(){
 
-        while ( !passengerQueue.isEmpty() && myCoordinator.busAvailable() ) {
+        while ( !pickupQueue.isEmpty() && myCoordinator.busAvailable() ) {
 
-            Passenger myPassenger = passengerQueue.poll();
-            int closestBusID = getClosestAvailableBusID(myPassenger).get();
-            this.assignItinerary( closestBusID, myPassenger );
+            Trip myTrip = pickupQueue.poll();
+            int closestBusID = getClosestAvailableBusID(myTrip).get();
+            this.assignItinerary( closestBusID, myTrip);
             myCoordinator.recordAssignments(closestBusID);
         }
+    }
+
+    public Map<Integer,Trip> createAssignments(){
+        Map<Integer,Trip> myAssignments = new HashMap<>();
+
+        while ( !pickupQueue.isEmpty() && myCoordinator.busAvailable() ) {
+
+            Trip myTrip = pickupQueue.poll();
+            int closestBusID = getClosestAvailableBusID(myTrip).get();
+            myAssignments.put( closestBusID, myTrip );
+            myCoordinator.recordAssignments(closestBusID);
+        }
+
+        return myAssignments;
     }
 
 }

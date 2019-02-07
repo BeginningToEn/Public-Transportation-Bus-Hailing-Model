@@ -1,6 +1,6 @@
 package UniverseP.PassengerFactory;
 
-import UniverseP.Units.Passenger;
+import UniverseP.Units.Trip;
 import UniverseP.ScenarioSimulation.ScenarioDefinition;
 
 import java.util.*;
@@ -47,24 +47,24 @@ class NormalTimeTableFactory{
         this.updateDefinition(myScenarioDef, myPassengerDef);
 
         PassengerTimeTable passengerTimeTable  = new PassengerTimeTable();
-        Passenger passengerIterator;
+        Trip tripIterator;
         int spawnTurnIterator;
 
         for ( int i = 0; i < numPassengers; i++ ) {
 
-            passengerIterator = this.createNormalPassenger(i);
-            spawnTurnIterator = passengerIterator.getSpawnTurn();
+            tripIterator = this.createNormalPassenger(i);
+            spawnTurnIterator = tripIterator.getSpawnTurn();
 
             if ( !passengerTimeTable .containsKey(spawnTurnIterator) ){
                 passengerTimeTable .put(spawnTurnIterator, new ArrayList<>());
             }
-            passengerTimeTable.get(spawnTurnIterator).add( passengerIterator );
+            passengerTimeTable.get(spawnTurnIterator).add(tripIterator);
         }
 
         return passengerTimeTable ;
     }
 
-    private Passenger createNormalPassenger(int ID ) {
+    private Trip createNormalPassenger(int ID ) {
 
 
         int spawnTurn = this.generateSpawnTurn();
@@ -89,7 +89,7 @@ class NormalTimeTableFactory{
                                 this.isDifferentLocation(x_spawn, y_spawn, x_dest, y_dest);
         } while (!validDestination);
 
-        return new Passenger(ID, x_spawn, y_spawn, x_dest, y_dest, spawnTurn);
+        return new Trip(ID, x_spawn, y_spawn, x_dest, y_dest, spawnTurn);
     }
 
     private int generateSpawnTurn() {

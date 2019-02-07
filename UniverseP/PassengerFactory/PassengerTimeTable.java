@@ -1,6 +1,6 @@
 package UniverseP.PassengerFactory;
 
-import UniverseP.Units.Passenger;
+import UniverseP.Units.Trip;
 import UniverseP.ScenarioSimulation.ScenarioDefinition;
 
 import java.util.HashMap;
@@ -15,7 +15,7 @@ import java.util.List;
  * from a pre-generated table or from live user input
  */
 
-public class PassengerTimeTable extends HashMap<Integer, List<Passenger>>{
+public class PassengerTimeTable extends HashMap<Integer, List<Trip>>{
 
     /*
      * For validation. Since ScenarioSimulator can draw data from PassengerTimeTable we need to validate the
@@ -34,16 +34,21 @@ public class PassengerTimeTable extends HashMap<Integer, List<Passenger>>{
 
     public void printAllPassengers() {
         for ( int iterator : this.keySet() ) {
-            for ( Passenger passIt : this.get(iterator) ) {
+            for ( Trip passIt : this.get(iterator) ) {
                 System.out.println(passIt);
             }
         }
     }
 
+    //experiment with lambdas
+    public void printAllWithLambdas() {
+        this.forEach((k, v) -> System.out.println((v)));
+    }
+
     public String toStringAllXSpawn() {
         String output = "";
         for ( int iterator : this.keySet() ) {
-            for ( Passenger passIt : this.get(iterator) ) {
+            for ( Trip passIt : this.get(iterator) ) {
                 output += passIt.getSpawn().getX() + "\n";
             }
         }
@@ -58,19 +63,43 @@ public class PassengerTimeTable extends HashMap<Integer, List<Passenger>>{
         return numPassengers;
     }
 
-    public int[] testAllXSpawn() {
-
-        int[] allXSPawns = new int[this.howManyPassengers()];
-
-        int i = 0;
-
+    public void printAllXSpawn() {
         for ( int iterator : this.keySet() ) {
-            for ( Passenger passIt : this.get(iterator) ) {
-                allXSPawns[i] = passIt.getSpawn().getX();
+            for ( Trip passIt : this.get(iterator) ) {
+                System.out.println(passIt.getSpawn().getX());
             }
         }
-
-        return allXSPawns;
     }
 
+    public void printAllYSpawn() {
+        for ( int iterator : this.keySet() ) {
+            for ( Trip passIt : this.get(iterator) ) {
+                System.out.println(passIt.getSpawn().getY());
+            }
+        }
+    }
+
+    public void printAllXDestination() {
+        for ( int iterator : this.keySet() ) {
+            for ( Trip passIt : this.get(iterator) ) {
+                System.out.println(passIt.getDestination().getX());
+            }
+        }
+    }
+
+    public void printAllYDestination() {
+        for ( int iterator : this.keySet() ) {
+            for ( Trip passIt : this.get(iterator) ) {
+                System.out.println(passIt.getDestination().getY());
+            }
+        }
+    }
+
+    public void printAllSpawnTurn() {
+        for ( int iterator : this.keySet() ) {
+            for ( Trip passIt : this.get(iterator) ) {
+                System.out.println(passIt.getSpawnTurn());
+            }
+        }
+    }
 }

@@ -1,6 +1,6 @@
 package UniverseP.PassengerFactory;
 
-import UniverseP.Units.Passenger;
+import UniverseP.Units.Trip;
 import UniverseP.ScenarioSimulation.ScenarioDefinition;
 import org.junit.Test;
 
@@ -33,7 +33,7 @@ public class NormalTimeTableFactoryTest {
         assertEquals(numPass, myTable.howManyPassengers());
 
         for ( int iterator : myTable.keySet() ) {
-            for ( Passenger passIt : myTable.get(iterator) ) {
+            for ( Trip passIt : myTable.get(iterator) ) {
 
                 assertTrue(passIt.getSpawn().getX() >= 0);
                 assertTrue(passIt.getSpawn().getY() >= 0);

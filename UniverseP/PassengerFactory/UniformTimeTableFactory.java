@@ -1,6 +1,6 @@
 package UniverseP.PassengerFactory;
 
-import UniverseP.Units.Passenger;
+import UniverseP.Units.Trip;
 import UniverseP.ScenarioSimulation.ScenarioDefinition;
 
 import java.util.*;
@@ -36,25 +36,25 @@ class UniformTimeTableFactory{
         this.updateDefinition(myScenarioDef);
 
         PassengerTimeTable passengerTimeTable = new PassengerTimeTable();
-        Passenger passengerIterator;
+        Trip tripIterator;
         int spawnTurnIterator;
 
         for ( int i = 0; i < numPassengers; i++ ) {
 
-            passengerIterator = this.createUniformPassenger(i);
-            spawnTurnIterator = passengerIterator.getSpawnTurn();
+            tripIterator = this.createUniformPassenger(i);
+            spawnTurnIterator = tripIterator.getSpawnTurn();
 
             if ( !passengerTimeTable.containsKey(spawnTurnIterator) ){
                 passengerTimeTable.put(spawnTurnIterator, new ArrayList<>());
             }
 
-            passengerTimeTable.get(passengerIterator.getSpawnTurn()).add( passengerIterator);
+            passengerTimeTable.get(tripIterator.getSpawnTurn()).add(tripIterator);
         }
 
         return passengerTimeTable;
     }
 
-    private Passenger createUniformPassenger(int ID ) {
+    private Trip createUniformPassenger(int ID ) {
 
         int spawnTurn = randNumGen.nextInt( numTurns );
         int x_spawn = randNumGen.nextInt( gridLength );
@@ -67,7 +67,7 @@ class UniformTimeTableFactory{
             y_destination = randNumGen.nextInt( gridHeight );
         } while (this.isValidDestination(x_spawn, y_spawn, x_destination, y_destination));
 
-        return new Passenger(ID, x_spawn, y_spawn, x_destination, y_destination, spawnTurn);
+        return new Trip(ID, x_spawn, y_spawn, x_destination, y_destination, spawnTurn);
     }
 
     //destination may not be the same as spawn; spawn = destination is not a valid trip

@@ -1,6 +1,6 @@
 package UniverseP.PassengerFactory;
 
-import UniverseP.Units.Passenger;
+import UniverseP.Units.Trip;
 import UniverseP.ScenarioSimulation.ScenarioDefinition;
 import org.junit.Test;
 
@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 /**
  * Created by EG OLIVER RC on 1/18/2018.
  */
-public class PassengerTimeTableFactoryTest {
+public class TripTableFactoryTest {
 
     @Test
     public void createDistribution() throws Exception {
@@ -27,7 +27,7 @@ public class PassengerTimeTableFactoryTest {
         assertEquals(100, myTable.howManyPassengers());
 
         for ( int iterator : myTable.keySet() ) {
-            for ( Passenger passIt : myTable.get(iterator) ) {
+            for ( Trip passIt : myTable.get(iterator) ) {
 
                 assertTrue(passIt.getSpawn().getX() >= 0);
                 assertTrue(passIt.getSpawn().getY() >= 0);

@@ -1,7 +1,7 @@
 package UniverseP.ScenarioSimulation;
 
 import UniverseP.PassengerFactory.PassengerTimeTable;
-import UniverseP.Units.Passenger;
+import UniverseP.Units.Trip;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +26,7 @@ public class PassengerTimeTableReader implements PassengerSource {
     }*/
 
     @Override
-    public Optional< List<Passenger> > getPassengers(int specificTime) {
+    public Optional< List<Trip> > getPassengers(int specificTime) {
 
         //If no passengers are spawned at specificTime return an empty optional
         if ( !myTable.keySet().contains(specificTime) ){

@@ -1,5 +1,8 @@
 package Strategies;
 
+import UniverseP.Units.Trip;
+
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -7,5 +10,5 @@ import java.util.Set;
  */
 public interface Strategy {
     void assignBuses();
-
+    Map<Integer,Trip> createAssignments();
 }

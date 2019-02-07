@@ -31,8 +31,8 @@ public class BusTest {
         assertEquals(new Location(1,1), myBus.getLocation());
 
         //movement with itinerary
-        Passenger myPassenger = new Passenger(0, 3, 2, 1, 1, 0);
-        myBus.setItinerary(Itinerary.createDirectItinerary(myPassenger));
+        Trip myTrip = new Trip(0, 3, 2, 1, 1, 0);
+        myBus.setItinerary(Itinerary.createDirectItinerary(myTrip));
         myBus.move();
         assertEquals(new Location(2,1), myBus.getLocation());
         myBus.move();
@@ -56,8 +56,8 @@ public class BusTest {
         HashSet<Integer> noPassengers = new HashSet<>();
         HashSet<Integer> withPassengers = new HashSet<>(Arrays.asList(0));
         assertEquals(noPassengers, myBus.getCurrentPassengers());
-        Passenger myPassenger = new Passenger(0, 2, 1, 2, 3, 0);
-        myBus.setItinerary(Itinerary.createDirectItinerary(myPassenger));
+        Trip myTrip = new Trip(0, 2, 1, 2, 3, 0);
+        myBus.setItinerary(Itinerary.createDirectItinerary(myTrip));
         myBus.move();
         myBus.handlePassengers();
         assertEquals(withPassengers, myBus.getCurrentPassengers());
@@ -71,8 +71,8 @@ public class BusTest {
 
     @Test
     public void reachedDestination() throws Exception {
-        Passenger myPassenger = new Passenger(0, 2, 1, 2, 3, 0);
-        myBus.setItinerary(Itinerary.createDirectItinerary(myPassenger));
+        Trip myTrip = new Trip(0, 2, 1, 2, 3, 0);
+        myBus.setItinerary(Itinerary.createDirectItinerary(myTrip));
         assertFalse(myBus.reachedDestination());
         myBus.move();
         assertTrue(myBus.reachedDestination());

@@ -1,13 +1,15 @@
 package UniverseP.Units;
 
-public class Passenger {
+import java.lang.String;
+
+public class Trip {
     private boolean onBus;
     private ActionableLocation spawn;
     private ActionableLocation destination;
     private int passengerID;
     private int spawnTurn;  //the turn during which the passenger asked for a ride
 
-    public Passenger(int ID, int spawn_x, int spawn_y, int destination_x, int destination_y, int spawnTurn) {
+    public Trip(int ID, int spawn_x, int spawn_y, int destination_x, int destination_y, int spawnTurn) {
         this.onBus = false;
         this.spawn = new PickUpLocation(spawn_x, spawn_y, ID);
         this.destination = new DropOffLocation(destination_x, destination_y, ID);
@@ -24,15 +26,16 @@ public class Passenger {
     public int getSpawnTurn() {
         return spawnTurn;
     }
+    public int getID() { return this.passengerID; }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Passenger passenger = (Passenger) o;
+        Trip trip = (Trip) o;
 
-        return passengerID == passenger.passengerID;
+        return passengerID == trip.passengerID;
     }
 
     @Override
@@ -42,8 +45,8 @@ public class Passenger {
 
     @Override
     public String toString() {
-        return "ID: " + passengerID + "-----Spawn: (" + spawn.getX() + ", " + spawn.getY() + ")-----Destination: (" +
-                destination.getX() + ", " + destination.getY() + ")-----SpawnTurn: " + spawnTurn;
+        return String.format("ID: %03d-----Spawn: (%03d, %03d)-----Destination: (%03d, %03d)-----SpawnTurn: %03d\n",
+                passengerID, spawn.getX(), spawn.getY(), destination.getX(), destination.getY() ,spawnTurn);
     }
 
 }

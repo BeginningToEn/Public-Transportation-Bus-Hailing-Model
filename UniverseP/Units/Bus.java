@@ -2,16 +2,17 @@ package UniverseP.Units;
 
 import java.util.Set;
 import java.util.HashSet;
+import java.lang.String;
 
 public class Bus {
-    private Integer ID;
+    private Integer busID;
     private Location currentLocation;
     private Itinerary myItinerary;
     private Set<Integer> currentPassengers;
     private Set<Integer> passengersToPickUp;
 
-    public Bus(int ID, Location currentLocation){
-        this.ID = ID;
+    public Bus(int busID, Location currentLocation){
+        this.busID = busID;
         this.currentLocation = currentLocation;
         this.myItinerary = Itinerary.createEmptyItinerary();
         this.currentPassengers = new HashSet<>();
@@ -20,7 +21,7 @@ public class Bus {
     public Location getLocation() {
         return currentLocation;
     }
-    public int getID(){ return this.ID; }
+    public int getBusID(){ return this.busID; }
     public Set<Integer> getCurrentPassengers() { return this.currentPassengers;}
 
     public boolean isEmpty(){
@@ -91,7 +92,9 @@ public class Bus {
 
     @Override
     public String toString(){
-        return "BusID: " + ID + " -- Bus(X,Y): " + currentLocation + " -- Passengers: " + currentPassengers +
-                " -- Itinerary: " + myItinerary;
+        return String.format("BusID: %d, Location: %s -- Passengers: %s -- Itinerary: %s", busID, currentLocation,
+                currentPassengers, myItinerary);
+        /*return "BusID: " + busID + " -- Bus(X,Y): " + currentLocation + " -- Passengers: " + currentPassengers +
+                " -- Itinerary: " + myItinerary;*/
     }
 }
