@@ -53,7 +53,7 @@ class NormalTimeTableFactory{
         for ( int i = 0; i < numPassengers; i++ ) {
 
             tripIterator = this.createNormalPassenger(i);
-            spawnTurnIterator = tripIterator.getSpawnTurn();
+            spawnTurnIterator = tripIterator.getTimeRequested();
 
             if ( !passengerTimeTable .containsKey(spawnTurnIterator) ){
                 passengerTimeTable .put(spawnTurnIterator, new ArrayList<>());

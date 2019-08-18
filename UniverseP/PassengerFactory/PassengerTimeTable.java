@@ -98,7 +98,7 @@ public class PassengerTimeTable extends HashMap<Integer, List<Trip>>{
     public void printAllSpawnTurn() {
         for ( int iterator : this.keySet() ) {
             for ( Trip passIt : this.get(iterator) ) {
-                System.out.println(passIt.getSpawnTurn());
+                System.out.println(passIt.getTimeRequested());
             }
         }
     }

@@ -45,8 +45,8 @@ public class NormalTimeTableFactoryTest {
                 assertTrue(passIt.getDestination().getX() < length);
                 assertTrue(passIt.getDestination().getY() < height);
 
-                assertTrue(passIt.getSpawnTurn() >= 0);
-                assertTrue(passIt.getSpawnTurn() < numTurns);
+                assertTrue(passIt.getTimeRequested() >= 0);
+                assertTrue(passIt.getTimeRequested() < numTurns);
             }
         }
     }

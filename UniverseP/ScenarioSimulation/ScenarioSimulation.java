@@ -1,5 +1,6 @@
 package UniverseP.ScenarioSimulation;
 
+import Memory.ScenarioMemory;
 import Strategies.SinglePassengerStrategy;
 import Strategies.Strategy;
 import UniverseP.BusFactory.BusTable;
@@ -42,6 +43,8 @@ public class ScenarioSimulation {
     private Strategy myStrat;
     private int turn;
 
+    private ScenarioMemory myMemory;
+
     private BusCoordinator myCoordinator;
     private Set<Integer> allPassengersByID;
     private Set<Integer> passengersToPickUpByID;
@@ -53,6 +56,7 @@ public class ScenarioSimulation {
         this.mySource = mySource;
         this.myQueue = new ConcurrentLinkedQueue<Trip>();
         this.allBuses = allBuses;
+        this.myMemory = new ScenarioMemory();
         this.turn = 0;
 
         this.myCoordinator = BusCoordinator.createBusCoordinator(allBuses.keySet());
@@ -70,7 +74,7 @@ public class ScenarioSimulation {
     public void run(){
 
         while ( this.turn < myDef.getNumTurns() ) {
-            this.updatePickupQueue(this.turn);
+            this.handleNewTripRequests(this.turn);
             Map<Integer,Trip> assignments = this.createAssignments();
             this.assignBuses(assignments);
             this.moveBuses();
@@ -83,7 +87,7 @@ public class ScenarioSimulation {
 
     }
 
-    private void updatePickupQueue(int turn) {
+    private void handleNewTripRequests(int turn) {
 
         if ( !mySource.getPassengers(turn).isPresent() ){ return; }
 

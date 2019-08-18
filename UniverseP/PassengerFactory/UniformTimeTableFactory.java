@@ -42,13 +42,13 @@ class UniformTimeTableFactory{
         for ( int i = 0; i < numPassengers; i++ ) {
 
             tripIterator = this.createUniformPassenger(i);
-            spawnTurnIterator = tripIterator.getSpawnTurn();
+            spawnTurnIterator = tripIterator.getTimeRequested();
 
             if ( !passengerTimeTable.containsKey(spawnTurnIterator) ){
                 passengerTimeTable.put(spawnTurnIterator, new ArrayList<>());
             }
 
-            passengerTimeTable.get(tripIterator.getSpawnTurn()).add(tripIterator);
+            passengerTimeTable.get(tripIterator.getTimeRequested()).add(tripIterator);
         }
 
         return passengerTimeTable;

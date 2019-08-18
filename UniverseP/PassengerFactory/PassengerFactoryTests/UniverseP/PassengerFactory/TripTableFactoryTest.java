@@ -39,8 +39,8 @@ public class TripTableFactoryTest {
                 assertTrue(passIt.getDestination().getX() < myScenDef.getGridLength());
                 assertTrue(passIt.getDestination().getY() < myScenDef.getGridHeight());
 
-                assertTrue(passIt.getSpawnTurn() >= 0);
-                assertTrue(passIt.getSpawnTurn() < myScenDef.getNumTurns());
+                assertTrue(passIt.getTimeRequested() >= 0);
+                assertTrue(passIt.getTimeRequested() < myScenDef.getNumTurns());
             }
         }
     }
