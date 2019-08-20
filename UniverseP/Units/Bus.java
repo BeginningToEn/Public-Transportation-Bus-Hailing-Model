@@ -8,24 +8,24 @@ public class Bus {
     private Integer busID;
     private Location currentLocation;
     private Itinerary myItinerary;
-    private Set<Integer> currentPassengers;
-    private Set<Integer> passengersToPickUp;
+    private Set<Integer> onboardTrips;  // trip IDs where passengers have been onboarded
+    private Set<Integer> assignedTrips;
 
     public Bus(int busID, Location currentLocation){
         this.busID = busID;
         this.currentLocation = currentLocation;
         this.myItinerary = Itinerary.createEmptyItinerary();
-        this.currentPassengers = new HashSet<>();
+        this.onboardTrips = new HashSet<>();
     }
 
     public Location getLocation() {
         return currentLocation;
     }
     public int getBusID(){ return this.busID; }
-    public Set<Integer> getCurrentPassengers() { return this.currentPassengers;}
+    public Set<Integer> getOnboardTrips() { return this.onboardTrips;}
 
     public boolean isEmpty(){
-        return currentPassengers.isEmpty();
+        return onboardTrips.isEmpty();
     }
 
     public boolean isUnassigned(){
@@ -33,7 +33,7 @@ public class Bus {
     }
 
     public int howManyPassengers() {
-        return currentPassengers.size();
+        return onboardTrips.size();
     }
 
     public void move(){
@@ -82,19 +82,19 @@ public class Bus {
         return currentLocation.getX() == destination.getX() && currentLocation.getY() == destination.getY();
     }
 
-    public void onboard(int passengerID){
-        currentPassengers.add(passengerID);
+    public void onboard(int tripID){
+        onboardTrips.add(tripID);
     }
 
-    public void deboard(int passengerID){
-        currentPassengers.remove(passengerID);
+    public void deboard(int tripID){
+        onboardTrips.remove(tripID);
     }
 
     @Override
     public String toString(){
         return String.format("BusID: %d, Location: %s -- Passengers: %s -- Itinerary: %s", busID, currentLocation,
-                currentPassengers, myItinerary);
-        /*return "BusID: " + busID + " -- Bus(X,Y): " + currentLocation + " -- Passengers: " + currentPassengers +
+                onboardTrips, myItinerary);
+        /*return "BusID: " + busID + " -- Bus(X,Y): " + currentLocation + " -- Passengers: " + onboardTrips +
                 " -- Itinerary: " + myItinerary;*/
     }
 }

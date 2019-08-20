@@ -1,5 +1,9 @@
-package UniverseP.PassengerFactory;
+package UniverseP.TripFactoryTest;
 
+import UniverseP.TripFactory.NormalDistributionDefinition;
+import UniverseP.TripFactory.NormalLocation;
+import UniverseP.TripFactory.TripTimeTable;
+import UniverseP.TripFactory.TripTimeTableFactory;
 import UniverseP.Units.Trip;
 import UniverseP.ScenarioSimulation.ScenarioDefinition;
 import org.junit.Test;
@@ -19,9 +23,9 @@ public class TripTableFactoryTest {
         NormalLocation myDestination = new NormalLocation(109, 128, 15);
         NormalDistributionDefinition myDistDef = NormalDistributionDefinition.createNormalDistDef(mySpawn, myDestination, 30, 10);
 
-        PassengerTimeTableFactory myFactory= new PassengerTimeTableFactory();
+        TripTimeTableFactory myFactory= new TripTimeTableFactory();
 
-        PassengerTimeTable myTable = myFactory.createNormalDistribution(myScenDef, myDistDef);
+        TripTimeTable myTable = myFactory.createNormalDistribution(myScenDef, myDistDef);
 
         //check for correct number of passengers
         assertEquals(100, myTable.howManyPassengers());

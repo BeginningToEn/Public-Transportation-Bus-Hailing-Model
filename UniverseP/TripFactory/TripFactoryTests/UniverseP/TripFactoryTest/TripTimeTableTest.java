@@ -1,5 +1,6 @@
-package UniverseP.PassengerFactory;
+package UniverseP.TripFactoryTest;
 
+import UniverseP.TripFactory.TripTimeTable;
 import UniverseP.Units.Trip;
 import org.junit.Test;
 
@@ -11,7 +12,7 @@ import static org.junit.Assert.*;
 /**
  * Created by EG OLIVER RC on 1/28/2018.
  */
-public class PassengerTimeTableTest {
+public class TripTimeTableTest {
     @Test
     public void printAllPassengers() throws Exception {
 
@@ -19,7 +20,7 @@ public class PassengerTimeTableTest {
 
     @Test
     public void toStringAllXSpawn() throws Exception {
-        PassengerTimeTable myTable = new PassengerTimeTable();
+        TripTimeTable myTable = new TripTimeTable();
 
         List<Trip> firstList = new ArrayList<>();
         firstList.add(new Trip(1, 10, 10, 10, 10, 20));
@@ -40,7 +41,7 @@ public class PassengerTimeTableTest {
 
     @Test
     public void howManyPassengers() throws Exception {
-        PassengerTimeTable myTable = new PassengerTimeTable();
+        TripTimeTable myTable = new TripTimeTable();
 
         assertEquals(0, myTable.howManyPassengers());
 

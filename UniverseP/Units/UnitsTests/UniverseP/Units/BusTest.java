@@ -55,18 +55,18 @@ public class BusTest {
     public void handlePassengers() throws Exception {
         HashSet<Integer> noPassengers = new HashSet<>();
         HashSet<Integer> withPassengers = new HashSet<>(Arrays.asList(0));
-        assertEquals(noPassengers, myBus.getCurrentPassengers());
+        assertEquals(noPassengers, myBus.getOnboardTrips());
         Trip myTrip = new Trip(0, 2, 1, 2, 3, 0);
         myBus.setItinerary(Itinerary.createDirectItinerary(myTrip));
         myBus.move();
         myBus.handlePassengers();
-        assertEquals(withPassengers, myBus.getCurrentPassengers());
+        assertEquals(withPassengers, myBus.getOnboardTrips());
         myBus.move();
         myBus.handlePassengers();
-        assertEquals(withPassengers, myBus.getCurrentPassengers());
+        assertEquals(withPassengers, myBus.getOnboardTrips());
         myBus.move();
         myBus.handlePassengers();
-        assertEquals(noPassengers, myBus.getCurrentPassengers());
+        assertEquals(noPassengers, myBus.getOnboardTrips());
     }
 
     @Test

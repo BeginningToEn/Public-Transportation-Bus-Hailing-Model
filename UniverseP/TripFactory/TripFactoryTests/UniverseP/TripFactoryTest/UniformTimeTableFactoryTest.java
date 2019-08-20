@@ -1,5 +1,7 @@
-package UniverseP.PassengerFactory;
+package UniverseP.TripFactoryTest;
 
+import UniverseP.TripFactory.TripTimeTable;
+import UniverseP.TripFactory.TripTimeTableFactory;
 import UniverseP.Units.Trip;
 import UniverseP.ScenarioSimulation.ScenarioDefinition;
 import org.junit.Test;
@@ -22,9 +24,9 @@ public class UniformTimeTableFactoryTest {
 
         ScenarioDefinition myScenDef = new ScenarioDefinition( length, height, numPass, numBuses, busCapacity, numTurns);
 
-        PassengerTimeTableFactory myFactory= new PassengerTimeTableFactory();
+        TripTimeTableFactory myFactory= new TripTimeTableFactory();
 
-        PassengerTimeTable myTable = myFactory.createUniformDistribution(myScenDef);
+        TripTimeTable myTable = myFactory.createUniformDistribution(myScenDef);
 
         //check for correct number of passengers
         assertEquals(numPass, myTable.howManyPassengers());

@@ -7,7 +7,7 @@ import java.util.Optional;
 /**
  * Created by EG OLIVER RC on 2/16/2018.
  */
-public interface PassengerSource {
+public interface TripSource {
     Optional<List<Trip>> getPassengers(int time);
     ScenarioDefinition getScenarioDef();
 }

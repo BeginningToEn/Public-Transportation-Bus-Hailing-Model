@@ -1,4 +1,4 @@
-package UniverseP.PassengerFactory;
+package UniverseP.TripFactory;
 
 import UniverseP.Units.Trip;
 import UniverseP.ScenarioSimulation.ScenarioDefinition;
@@ -33,7 +33,7 @@ class NormalTimeTableFactory{
         this.numTurns = myScenarioDef.getNumTurns();
         this.gridLength = myScenarioDef.getGridLength();
         this.gridHeight = myScenarioDef.getGridHeight();
-        this.numPassengers = myScenarioDef.getNumPassengers();
+        this.numPassengers = myScenarioDef.getNumTrips();
         this.spawn = myPassengerDef.getSpawn();
         this.destination = myPassengerDef.getDestination();
         this.spawnTimeAvg = myPassengerDef.getSpawnTimeAvg();
@@ -41,12 +41,12 @@ class NormalTimeTableFactory{
     }
 
 
-    PassengerTimeTable createDistribution( ScenarioDefinition myScenarioDef,
-                                           NormalDistributionDefinition myPassengerDef ) {
+    TripTimeTable createTrips(ScenarioDefinition myScenarioDef,
+                              NormalDistributionDefinition myPassengerDef ) {
 
         this.updateDefinition(myScenarioDef, myPassengerDef);
 
-        PassengerTimeTable passengerTimeTable  = new PassengerTimeTable();
+        TripTimeTable tripTimeTable = new TripTimeTable();
         Trip tripIterator;
         int spawnTurnIterator;
 
@@ -55,13 +55,13 @@ class NormalTimeTableFactory{
             tripIterator = this.createNormalPassenger(i);
             spawnTurnIterator = tripIterator.getTimeRequested();
 
-            if ( !passengerTimeTable .containsKey(spawnTurnIterator) ){
-                passengerTimeTable .put(spawnTurnIterator, new ArrayList<>());
+            if ( !tripTimeTable.containsKey(spawnTurnIterator) ){
+                tripTimeTable.put(spawnTurnIterator, new ArrayList<>());
             }
-            passengerTimeTable.get(spawnTurnIterator).add(tripIterator);
+            tripTimeTable.get(spawnTurnIterator).add(tripIterator);
         }
 
-        return passengerTimeTable ;
+        return tripTimeTable;
     }
 
     private Trip createNormalPassenger(int ID ) {

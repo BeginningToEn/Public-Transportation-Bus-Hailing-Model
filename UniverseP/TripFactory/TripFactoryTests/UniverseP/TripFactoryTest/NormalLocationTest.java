@@ -1,5 +1,6 @@
-package UniverseP.PassengerFactory;
+package UniverseP.TripFactoryTest;
 
+import UniverseP.TripFactory.NormalLocation;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

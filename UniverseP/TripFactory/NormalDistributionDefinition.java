@@ -1,4 +1,4 @@
-package UniverseP.PassengerFactory;
+package UniverseP.TripFactory;
 
 /**
  *

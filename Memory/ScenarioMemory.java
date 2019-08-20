@@ -1,5 +1,7 @@
 package Memory;
 
+import UniverseP.ScenarioSimulation.TripSource;
+import UniverseP.TripFactory.TripTimeTable;
 import UniverseP.Units.Trip;
 
 import java.util.HashMap;
@@ -10,13 +12,10 @@ import java.util.Map;
  */
 public class ScenarioMemory {
 
-    private Map<Integer, Trip> tripMap;
+    private TripSource myTripSource;
 
-    public ScenarioMemory(){
-        this.tripMap = new HashMap<>();
+    public ScenarioMemory(TripSource myTripSource){
+        this.myTripSource = myTripSource;
     }
 
-    public void put(Trip myTrip){
-        tripMap.put(myTrip.getID(), myTrip);
-    }
 }

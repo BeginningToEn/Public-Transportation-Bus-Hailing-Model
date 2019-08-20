@@ -1,6 +1,6 @@
 package UniverseP.ScenarioSimulation;
 
-import UniverseP.PassengerFactory.PassengerTimeTable;
+import UniverseP.TripFactory.TripTimeTable;
 import UniverseP.Units.Trip;
 
 import java.util.List;
@@ -9,11 +9,11 @@ import java.util.Optional;
 /**
  * Created by EG OLIVER RC on 2/17/2018.
  */
-public class PassengerTimeTableReader implements PassengerSource {
+public class TripTimeTableReader implements TripSource {
 
-    private PassengerTimeTable myTable;
+    private TripTimeTable myTable;
 
-    public PassengerTimeTableReader( PassengerTimeTable myTable) {
+    public TripTimeTableReader(TripTimeTable myTable) {
         this.myTable = myTable;
     }
 
@@ -21,14 +21,11 @@ public class PassengerTimeTableReader implements PassengerSource {
         return myTable.getMyDef();
     }
 
-    /*public List<Passenger> getPassengers() {
-        return myTable.get(time++);
-    }*/
 
     @Override
     public Optional< List<Trip> > getPassengers(int specificTime) {
 
-        //If no passengers are spawned at specificTime return an empty optional
+        //If no trips are requested at specificTime return an empty optional
         if ( !myTable.keySet().contains(specificTime) ){
             return Optional.empty();
         }

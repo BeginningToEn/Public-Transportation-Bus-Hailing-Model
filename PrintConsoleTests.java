@@ -1,9 +1,9 @@
 import Strategies.SinglePassengerStrategy;
 import UniverseP.BusFactory.BusTable;
-import UniverseP.PassengerFactory.NormalDistributionDefinition;
-import UniverseP.PassengerFactory.NormalLocation;
-import UniverseP.PassengerFactory.PassengerTimeTable;
-import UniverseP.PassengerFactory.PassengerTimeTableFactory;
+import UniverseP.TripFactory.NormalDistributionDefinition;
+import UniverseP.TripFactory.NormalLocation;
+import UniverseP.TripFactory.TripTimeTable;
+import UniverseP.TripFactory.TripTimeTableFactory;
 import UniverseP.ScenarioSimulation.*;
 import UniverseP.Units.*;
 
@@ -21,10 +21,10 @@ public class PrintConsoleTests {
         NormalLocation myDestination = new NormalLocation(109, 128, 15);
         NormalDistributionDefinition myDistDef = NormalDistributionDefinition.createNormalDistDef(
                 mySpawn, myDestination, 30, 10);
-        PassengerTimeTableFactory myFactory= new PassengerTimeTableFactory();
+        TripTimeTableFactory myFactory= new TripTimeTableFactory();
 
-        PassengerTimeTable myTable = myFactory.createNormalDistribution(myScenDef, myDistDef);
-        myTable.printAllPassengers();
+        TripTimeTable myTable = myFactory.createNormalDistribution(myScenDef, myDistDef);
+        myTable.printAllTrips();
     }
 
     public static void testItineraryEmpty(){
@@ -105,14 +105,14 @@ public class PrintConsoleTests {
         allBuses.put(1, myBus);
 
         //Create a passenger source which here takes the form of a PassengerTimeTableReader but can be other things
-        PassengerTimeTable myPassTTable = new PassengerTimeTable();
+        TripTimeTable myPassTTable = new TripTimeTable();
         List<Trip> spawnAtZero = new ArrayList<>();
         spawnAtZero.add(new Trip(1, 1, 1, 2, 2, 0));
         List<Trip> spawnAtFive = new ArrayList<>();
         spawnAtFive.add(new Trip(1, 1, 1, 2, 2, 0));
         myPassTTable.put(0, spawnAtZero);   //need to check what the key is supposed to be, right now key = spawn turn
         myPassTTable.put(5, spawnAtFive);
-        PassengerSource mySource = new PassengerTimeTableReader(myPassTTable);
+        TripSource mySource = new TripTimeTableReader(myPassTTable);
 
 
         ScenarioSimulation mySim = ScenarioSimulation.setup(myDef, mySource, allBuses);
@@ -126,9 +126,9 @@ public class PrintConsoleTests {
         ScenarioDefinition myDef = new ScenarioDefinition(100,100,10,2,1,8);
 
         //create a custom Passengers
-        PassengerTimeTableFactory myFactory = new PassengerTimeTableFactory();
-        PassengerTimeTable passTable = myFactory.createUniformDistribution(myDef);
-        PassengerSource passengerSource = new PassengerTimeTableReader(passTable);
+        TripTimeTableFactory myFactory = new TripTimeTableFactory();
+        TripTimeTable passTable = myFactory.createUniformDistribution(myDef);
+        TripSource tripSource = new TripTimeTableReader(passTable);
 
         //create a custom bus table and use it to create a BusCoordinator
         Bus myBus = new Bus(1, new Location(0,0));
@@ -139,7 +139,7 @@ public class PrintConsoleTests {
 
         passTable.printAllWithLambdas();
 
-        ScenarioSimulation mySim = ScenarioSimulation.setup(myDef, passengerSource, allBuses);
+        ScenarioSimulation mySim = ScenarioSimulation.setup(myDef, tripSource, allBuses);
         mySim.run();
     }
 
@@ -153,10 +153,10 @@ public class PrintConsoleTests {
         NormalDistributionDefinition myNormDef = NormalDistributionDefinition.createNormalDistDef(
                 normSpawn, normDest, 50, 15);
 
-        //create a custom Passengers
-        PassengerTimeTableFactory myFactory = new PassengerTimeTableFactory();
-        //PassengerTimeTable passTable = myFactory.createUniformDistribution(myDef);
-        PassengerTimeTable passTable = myFactory.createNormalDistribution(myDef, myNormDef);
+        //create a custom Trips
+        TripTimeTableFactory myFactory = new TripTimeTableFactory();
+        //TripTimeTable passTable = myFactory.createUniformDistribution(myDef);
+        TripTimeTable passTable = myFactory.createNormalDistribution(myDef, myNormDef);
 
         passTable.printAllSpawnTurn();
     }

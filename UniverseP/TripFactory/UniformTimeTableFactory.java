@@ -1,4 +1,4 @@
-package UniverseP.PassengerFactory;
+package UniverseP.TripFactory;
 
 import UniverseP.Units.Trip;
 import UniverseP.ScenarioSimulation.ScenarioDefinition;
@@ -27,34 +27,34 @@ class UniformTimeTableFactory{
         this.numTurns = myScenarioDef.getNumTurns();
         this.gridLength = myScenarioDef.getGridLength();
         this.gridHeight = myScenarioDef.getGridHeight();
-        this.numPassengers = myScenarioDef.getNumPassengers();
+        this.numPassengers = myScenarioDef.getNumTrips();
     }
 
 
-    PassengerTimeTable createDistribution( ScenarioDefinition myScenarioDef ) {
+    TripTimeTable createTrips(ScenarioDefinition myScenarioDef ) {
 
         this.updateDefinition(myScenarioDef);
 
-        PassengerTimeTable passengerTimeTable = new PassengerTimeTable();
+        TripTimeTable tripTimeTable = new TripTimeTable();
         Trip tripIterator;
         int spawnTurnIterator;
 
         for ( int i = 0; i < numPassengers; i++ ) {
 
-            tripIterator = this.createUniformPassenger(i);
+            tripIterator = this.createUniformTrip(i);
             spawnTurnIterator = tripIterator.getTimeRequested();
 
-            if ( !passengerTimeTable.containsKey(spawnTurnIterator) ){
-                passengerTimeTable.put(spawnTurnIterator, new ArrayList<>());
+            if ( !tripTimeTable.containsKey(spawnTurnIterator) ){
+                tripTimeTable.put(spawnTurnIterator, new ArrayList<>());
             }
 
-            passengerTimeTable.get(tripIterator.getTimeRequested()).add(tripIterator);
+            tripTimeTable.get(tripIterator.getTimeRequested()).add(tripIterator);
         }
 
-        return passengerTimeTable;
+        return tripTimeTable;
     }
 
-    private Trip createUniformPassenger(int ID ) {
+    private Trip createUniformTrip(int ID ) {
 
         int spawnTurn = randNumGen.nextInt( numTurns );
         int x_spawn = randNumGen.nextInt( gridLength );

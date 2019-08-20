@@ -1,4 +1,4 @@
-package UniverseP.PassengerFactory;
+package UniverseP.TripFactory;
 
 import UniverseP.Units.Trip;
 import UniverseP.ScenarioSimulation.ScenarioDefinition;
@@ -15,7 +15,7 @@ import java.util.List;
  * from a pre-generated table or from live user input
  */
 
-public class PassengerTimeTable extends HashMap<Integer, List<Trip>>{
+public class TripTimeTable extends HashMap<Integer, List<Trip>>{
 
     /*
      * For validation. Since ScenarioSimulator can draw data from PassengerTimeTable we need to validate the
@@ -24,7 +24,7 @@ public class PassengerTimeTable extends HashMap<Integer, List<Trip>>{
      */
     private ScenarioDefinition myDef;
 
-    public PassengerTimeTable () {
+    public TripTimeTable() {
         this.myDef = myDef;
     }
 
@@ -32,7 +32,7 @@ public class PassengerTimeTable extends HashMap<Integer, List<Trip>>{
         return myDef;
     }
 
-    public void printAllPassengers() {
+    public void printAllTrips() {
         for ( int iterator : this.keySet() ) {
             for ( Trip passIt : this.get(iterator) ) {
                 System.out.println(passIt);

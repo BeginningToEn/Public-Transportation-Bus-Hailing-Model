@@ -37,7 +37,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class ScenarioSimulation {
 
     private ScenarioDefinition myDef;
-    private PassengerSource mySource;
+    private TripSource mySource;
     private Queue<Trip> myQueue;
     private BusTable allBuses;
     private Strategy myStrat;
@@ -51,12 +51,12 @@ public class ScenarioSimulation {
     private Set<Integer> passengersEnRouteByID;
     private Set<Integer> deliveredPassengersByID;
 
-    private ScenarioSimulation(ScenarioDefinition myDef, PassengerSource mySource, BusTable allBuses /*an enum for strat should go here*/ ){
+    private ScenarioSimulation(ScenarioDefinition myDef, TripSource mySource, BusTable allBuses /*an enum for strat should go here*/ ){
         this.myDef = myDef;
         this.mySource = mySource;
         this.myQueue = new ConcurrentLinkedQueue<Trip>();
         this.allBuses = allBuses;
-        this.myMemory = new ScenarioMemory();
+        this.myMemory = new ScenarioMemory(mySource);
         this.turn = 0;
 
         this.myCoordinator = BusCoordinator.createBusCoordinator(allBuses.keySet());
@@ -67,7 +67,7 @@ public class ScenarioSimulation {
         this.myStrat = new SinglePassengerStrategy(allBuses, myCoordinator, myQueue);  //this should be a var
     }
 
-    public static ScenarioSimulation setup(ScenarioDefinition myDef, PassengerSource mySource, BusTable allBuses /*an enum for strat should go here*/){
+    public static ScenarioSimulation setup(ScenarioDefinition myDef, TripSource mySource, BusTable allBuses /*an enum for strat should go here*/){
         return new ScenarioSimulation(myDef, mySource, allBuses);
     }
 
