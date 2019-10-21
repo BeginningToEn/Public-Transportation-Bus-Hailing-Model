@@ -1,5 +1,7 @@
 package UniverseP.Units;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
 import java.lang.String;
@@ -61,20 +63,26 @@ public class Bus {
         this.myItinerary = myItinerary;
     }
 
-    public void handlePassengers(){
+    public List<ActionLog> handlePassengers(){
+
+        List<ActionLog> actions = new ArrayList<ActionLog>();
 
         while( !myItinerary.isEmpty() && this.reachedDestination() ){
 
-            int passengerID = myItinerary.peek().getPassengerID();
+            int tripID = myItinerary.peek().getPassengerID();
 
             if (myItinerary.peek().isPickUpLocation()){
-                this.onboard(passengerID);
+                this.onboard(tripID);
+                actions.add(new ActionLog(ActionType.PICKUP, this.busID, tripID));
             } else {    //drop off location
-                this.deboard(passengerID);
+                this.deboard(tripID);
+                actions.add(new ActionLog(ActionType.DROPOFF, this.busID, tripID));
             }
 
             myItinerary.poll();
         }
+
+        return actions;
     }
 
     public boolean reachedDestination(){

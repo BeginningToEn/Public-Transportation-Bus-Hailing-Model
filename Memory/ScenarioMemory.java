@@ -1,5 +1,6 @@
 package Memory;
 
+import UniverseP.ScenarioSimulation.ScenarioDefinition;
 import UniverseP.ScenarioSimulation.TripSource;
 import UniverseP.TripFactory.TripTimeTable;
 import UniverseP.Units.Trip;
@@ -12,10 +13,35 @@ import java.util.Map;
  */
 public class ScenarioMemory {
 
-    private TripSource myTripSource;
+    private HashMap<Integer, TripMemory> tripMemoryByID;
+    private HashMap<Integer, BusMemory> busMemoryByID;
 
-    public ScenarioMemory(TripSource myTripSource){
-        this.myTripSource = myTripSource;
+    private ScenarioDefinition myDef;
+    private TripSource mySource;
+
+    public ScenarioMemory(ScenarioDefinition myDef){
+        this.myDef = myDef;
+        this.tripMemoryByID = new HashMap<>();
+        this.busMemoryByID = new HashMap<>();
+    }
+
+    public void logCreation(Trip myTrip){
+        tripMemoryByID.put(myTrip.getID(), new TripMemory(myTrip));
+    }
+
+    public void logAssignment(int tripID, int busID, int turn){
+        tripMemoryByID.get(tripID).setAssigned(busID, turn);
+    }
+
+
+    public void logOnboarding(int tripID, int turn){
+
+        tripMemoryByID.get(tripID).setTimePickedUp(turn);
+    }
+
+    public void logOffboarding(int tripID, int turn){
+
+        tripMemoryByID.get(tripID).setTimeDroppedOff(turn);
     }
 
 }

@@ -4,9 +4,7 @@ import Memory.ScenarioMemory;
 import Strategies.SinglePassengerStrategy;
 import Strategies.Strategy;
 import UniverseP.BusFactory.BusTable;
-import UniverseP.Units.Bus;
-import UniverseP.Units.Itinerary;
-import UniverseP.Units.Trip;
+import UniverseP.Units.*;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -45,7 +43,7 @@ public class ScenarioSimulation {
 
     private ScenarioMemory myMemory;
 
-    private BusCoordinator myCoordinator;
+    private BusCoordinator myBusCoordinator;
     private Set<Integer> allPassengersByID;
     private Set<Integer> passengersToPickUpByID;
     private Set<Integer> passengersEnRouteByID;
@@ -56,15 +54,15 @@ public class ScenarioSimulation {
         this.mySource = mySource;
         this.myQueue = new ConcurrentLinkedQueue<Trip>();
         this.allBuses = allBuses;
-        this.myMemory = new ScenarioMemory(mySource);
+        this.myMemory = new ScenarioMemory(myDef);
         this.turn = 0;
 
-        this.myCoordinator = BusCoordinator.createBusCoordinator(allBuses.keySet());
+        this.myBusCoordinator = BusCoordinator.createBusCoordinator(allBuses.keySet());
         this.allPassengersByID = new HashSet<>();
         this.passengersToPickUpByID = new HashSet<>();
         this.passengersEnRouteByID = new HashSet<>();
         this.deliveredPassengersByID = new HashSet<>();
-        this.myStrat = new SinglePassengerStrategy(allBuses, myCoordinator, myQueue);  //this should be a var
+        this.myStrat = new SinglePassengerStrategy(allBuses, myBusCoordinator, myQueue);  //this should be a var
     }
 
     public static ScenarioSimulation setup(ScenarioDefinition myDef, TripSource mySource, BusTable allBuses /*an enum for strat should go here*/){
@@ -89,10 +87,11 @@ public class ScenarioSimulation {
 
     private void handleNewTripRequests(int turn) {
 
-        if ( !mySource.getPassengers(turn).isPresent() ){ return; }
+        if ( !mySource.getTrips(turn).isPresent() ){ return; }
 
-        for ( Trip it : mySource.getPassengers(turn).get() ) {
+        for ( Trip it : mySource.getTrips(turn).get() ) {
             myQueue.offer(it);
+            myMemory.logCreation(it);
         }
     }
 
@@ -108,7 +107,9 @@ public class ScenarioSimulation {
     private void assignBuses(Map<Integer,Trip> assignments) {
 
         for(int busID : assignments.keySet()) {
-            assignItinerary(busID, assignments.get(busID));
+            Trip myTrip = assignments.get(busID);
+            assignItinerary(busID, myTrip);
+            myMemory.logAssignment(myTrip.getID(), busID, turn);
         }
     }
 
@@ -120,17 +121,28 @@ public class ScenarioSimulation {
 
     //Assigned Buses onboard passengers if they're at a PickUp Location
     private void handlePassengers(){
-        for ( int it : myCoordinator.getAssigned() ){
-            allBuses.get(it).handlePassengers();
+        for ( int busID : myBusCoordinator.getAssigned() ){
+            List<ActionLog> actions = allBuses.get(busID).handlePassengers();
+            this.logActions(actions);
+        }
+    }
+
+    private void logActions(List<ActionLog> actions){
+        for(ActionLog action : actions){
+            if(action.getMyType() == ActionType.PICKUP){
+                myMemory.logOnboarding(action.getTripID(), turn);
+            } else if(action.getMyType() == ActionType.DROPOFF){
+                myMemory.logOffboarding(action.getTripID(), turn);
+            }
         }
     }
 
     //call this function after handlePassengers() to mark buses that just dropped off all its passengers as unassigned
     private void updateBusCoordinator(){
-        for ( int it : myCoordinator.getAssigned() ){
+        for ( int it : myBusCoordinator.getAssigned() ){
             Bus iteratorBus = allBuses.get(it);
             if(iteratorBus.isUnassigned()){
-                myCoordinator.recordAvailable(iteratorBus.getBusID());
+                myBusCoordinator.recordAvailable(iteratorBus.getBusID());
             }
         }
     }

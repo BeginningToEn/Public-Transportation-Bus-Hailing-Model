@@ -1,6 +1,7 @@
 package Memory;
 
 import UniverseP.Units.Trip;
+import java.util.Optional;
 
 /**
  * Created by EG OLIVER RC on 2/14/2019.
@@ -10,28 +11,34 @@ public class TripMemory {
     private final Trip myTrip;
 
     private int timeRequested;
-    private int timeAssigned;
-    private int timePickedUp;
-    private int timeDroppedOff;
+    private Optional<Integer> busID;
+    private Optional<Integer> timeAssigned;
+    private Optional<Integer> timePickedUp;
+    private Optional<Integer> timeDroppedOff;
 
     private int waitTime;
     private int travelTime;
 
-    public TripMemory(Trip myTrip, int timeRequested){
+    public TripMemory(Trip myTrip){
         this.myTrip = myTrip;
-        this.timeRequested = timeRequested;
+        this.timeRequested = myTrip.getTimeRequested();
+        busID = Optional.empty();
+        timeAssigned = Optional.empty();
+        timePickedUp = Optional.empty();
+        timeDroppedOff = Optional.empty();
     }
 
-    public void setTimeAssigned(int timeAssigned) {
-        this.timeAssigned = timeAssigned;
+    public void setAssigned(int busID, int timeAssigned) {
+        this.busID = Optional.of(busID);
+        this.timeAssigned = Optional.of(timeAssigned);
     }
 
     public void setTimePickedUp(int timePickedUp) {
-        this.timePickedUp = timePickedUp;
+        this.timePickedUp = Optional.of(timePickedUp);
     }
 
     public void setTimeDroppedOff(int timeDroppedOff) {
-        this.timeDroppedOff = timeDroppedOff;
+        this.timeDroppedOff = Optional.of(timeDroppedOff);
     }
 
     public void setWaitTime(int waitTime) {
@@ -40,5 +47,17 @@ public class TripMemory {
 
     public void setTravelTime(int travelTime) {
         this.travelTime = travelTime;
+    }
+
+    public Optional<Integer> getTimeAssigned() {
+        return timeAssigned;
+    }
+
+    public Optional<Integer> getTimePickedUp() {
+        return timePickedUp;
+    }
+
+    public Optional<Integer> getTimeDroppedOff() {
+        return timeDroppedOff;
     }
 }

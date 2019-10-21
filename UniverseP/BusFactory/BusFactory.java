@@ -15,7 +15,7 @@ public class BusFactory {
     private int gridLength;
     private int gridHeight;
 
-    BusFactory() {
+    public BusFactory() {
         this.randNumGen = new Random();
     }
 
@@ -24,13 +24,13 @@ public class BusFactory {
         this.gridHeight = myScenarioDef.getGridHeight();
     }
 
-    public BusTable createDistribution(ScenarioDefinition myScenarioDef, int numBuses ) {
+    public BusTable createDistribution(ScenarioDefinition myScenarioDef) {
 
         BusTable allBuses = new BusTable(myScenarioDef);
 
         this.updateDefinition(myScenarioDef);
 
-        for (int i = 0; i < numBuses; i++) {
+        for (int i = 0; i < myScenarioDef.getNumBuses(); i++) {
             allBuses.put(i, this.createBus(i));
         }
 

@@ -45,4 +45,5 @@ public class ScenarioDefinition {
         return numTurns;
     }
     public int getNumTrips() { return numTrips; }
+    public int getNumBuses() { return numBuses; }
 }

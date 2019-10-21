@@ -1,4 +1,5 @@
 import Strategies.SinglePassengerStrategy;
+import UniverseP.BusFactory.BusFactory;
 import UniverseP.BusFactory.BusTable;
 import UniverseP.TripFactory.NormalDistributionDefinition;
 import UniverseP.TripFactory.NormalLocation;
@@ -156,8 +157,25 @@ public class PrintConsoleTests {
         //create a custom Trips
         TripTimeTableFactory myFactory = new TripTimeTableFactory();
         //TripTimeTable passTable = myFactory.createUniformDistribution(myDef);
-        TripTimeTable passTable = myFactory.createNormalDistribution(myDef, myNormDef);
+        TripTimeTable tripTable = myFactory.createNormalDistribution(myDef, myNormDef);
 
-        passTable.printAllSpawnTurn();
+        tripTable.printAllWithLambdas();
+    }
+
+    public static void testScenario(){
+        //create definition that defines grid, busCapacity, numTurns, and can be used to create bus and pass tables
+        //length, height, numPass, numBuses, busCapacity, numTurns
+        ScenarioDefinition myDef = new ScenarioDefinition(100,100,100,2,1,8);
+
+        //create a custom Passengers
+        TripTimeTableFactory myFactory = new TripTimeTableFactory();
+        TripTimeTable passTable = myFactory.createUniformDistribution(myDef);
+        TripSource tripSource = new TripTimeTableReader(passTable);
+
+        BusFactory myBusFactory = new BusFactory();
+        BusTable myBusTable = myBusFactory.createDistribution(myDef);
+
+        ScenarioSimulation mySim = ScenarioSimulation.setup(myDef, tripSource, myBusTable);
+        mySim.run();
     }
 }

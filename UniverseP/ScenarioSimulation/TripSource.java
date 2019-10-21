@@ -8,6 +8,6 @@ import java.util.Optional;
  * Created by EG OLIVER RC on 2/16/2018.
  */
 public interface TripSource {
-    Optional<List<Trip>> getPassengers(int time);
+    Optional<List<Trip>> getTrips(int time);
     ScenarioDefinition getScenarioDef();
 }

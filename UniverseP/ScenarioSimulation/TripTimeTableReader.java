@@ -23,7 +23,7 @@ public class TripTimeTableReader implements TripSource {
 
 
     @Override
-    public Optional< List<Trip> > getPassengers(int specificTime) {
+    public Optional< List<Trip> > getTrips(int specificTime) {
 
         //If no trips are requested at specificTime return an empty optional
         if ( !myTable.keySet().contains(specificTime) ){
