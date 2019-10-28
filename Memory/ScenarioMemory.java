@@ -44,4 +44,12 @@ public class ScenarioMemory {
         tripMemoryByID.get(tripID).setTimeDroppedOff(turn);
     }
 
+    public void print(){
+        this.tripMemoryByID.forEach((k, v) -> System.out.println((v)));
+    }
+
+    public HashMap<Integer, TripMemory> getTrips(){
+        return tripMemoryByID;
+    }
+
 }

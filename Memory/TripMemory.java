@@ -2,6 +2,7 @@ package Memory;
 
 import UniverseP.Units.Trip;
 import java.util.Optional;
+import java.lang.String;
 
 /**
  * Created by EG OLIVER RC on 2/14/2019.
@@ -49,6 +50,10 @@ public class TripMemory {
         this.travelTime = travelTime;
     }
 
+    public int getTimeRequested() {
+        return timeRequested;
+    }
+
     public Optional<Integer> getTimeAssigned() {
         return timeAssigned;
     }
@@ -59,5 +64,11 @@ public class TripMemory {
 
     public Optional<Integer> getTimeDroppedOff() {
         return timeDroppedOff;
+    }
+
+    @Override
+    public String toString(){
+        return String.format("TripID(%d), BusID(%d), requested(%d), assigned(%d), pickedup(%d), droppedoff(%d),\n",
+                myTrip.getID(), busID, timeRequested, timeAssigned, timePickedUp, timeDroppedOff);
     }
 }
