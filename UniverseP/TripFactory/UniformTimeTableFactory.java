@@ -65,7 +65,7 @@ class UniformTimeTableFactory{
         do {
             x_destination = randNumGen.nextInt( gridLength );
             y_destination = randNumGen.nextInt( gridHeight );
-        } while (this.isValidDestination(x_spawn, y_spawn, x_destination, y_destination));
+        } while (!this.isValidDestination(x_spawn, y_spawn, x_destination, y_destination));
 
         return new Trip(ID, x_spawn, y_spawn, x_destination, y_destination, spawnTurn);
     }

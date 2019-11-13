@@ -11,4 +11,5 @@ import java.util.Set;
 public interface Strategy {
     void assignBuses();
     Map<Integer,Trip> createAssignments();
+    void receiveNewTrip(Trip newTrip);
 }

@@ -39,6 +39,7 @@ public class TripAnalysis {
         this.myLog = myLog;
         sumData();
         calcPercentages();
+        totalTrips = myLog.getTrips().keySet().size();
     }
 
     public void sumData(){

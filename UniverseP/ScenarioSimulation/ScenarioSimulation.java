@@ -36,7 +36,6 @@ public class ScenarioSimulation {
 
     private ScenarioDefinition myDef;
     private TripSource mySource;
-    private Queue<Trip> myQueue;
     private BusTable allBuses;
     private Strategy myStrat;
     private int turn;
@@ -52,7 +51,6 @@ public class ScenarioSimulation {
     private ScenarioSimulation(ScenarioDefinition myDef, TripSource mySource, BusTable allBuses /*an enum for strat should go here*/ ){
         this.myDef = myDef;
         this.mySource = mySource;
-        this.myQueue = new ConcurrentLinkedQueue<Trip>();
         this.allBuses = allBuses;
         this.myMemory = new ScenarioMemory(myDef);
         this.turn = 0;
@@ -62,7 +60,7 @@ public class ScenarioSimulation {
         this.passengersToPickUpByID = new HashSet<>();
         this.passengersEnRouteByID = new HashSet<>();
         this.deliveredPassengersByID = new HashSet<>();
-        this.myStrat = new SinglePassengerStrategy(allBuses, myBusCoordinator, myQueue);  //this should be a var
+        this.myStrat = new SinglePassengerStrategy(allBuses, myBusCoordinator);  //this should be a var
     }
 
     public static ScenarioSimulation setup(ScenarioDefinition myDef, TripSource mySource, BusTable allBuses /*an enum for strat should go here*/){
@@ -90,7 +88,7 @@ public class ScenarioSimulation {
         if ( !mySource.getTrips(turn).isPresent() ){ return; }
 
         for ( Trip it : mySource.getTrips(turn).get() ) {
-            myQueue.offer(it);
+            myStrat.receiveNewTrip(it);
             myMemory.logCreation(it);
         }
     }
@@ -139,12 +137,14 @@ public class ScenarioSimulation {
 
     //call this function after handlePassengers() to mark buses that just dropped off all its passengers as unassigned
     private void updateBusCoordinator(){
+        Set<Integer> emptyBusIDs = new HashSet<>();
         for ( int it : myBusCoordinator.getAssigned() ){
             Bus iteratorBus = allBuses.get(it);
             if(iteratorBus.isUnassigned()){
-                myBusCoordinator.recordAvailable(iteratorBus.getBusID());
+                emptyBusIDs.add(iteratorBus.getBusID());
             }
         }
+        myBusCoordinator.recordAvailable(emptyBusIDs);
     }
 
     private void printReport(){
@@ -152,5 +152,9 @@ public class ScenarioSimulation {
         for (int it : allBuses.keySet()){
             System.out.println(allBuses.get(it));
         }
+    }
+
+    public ScenarioMemory getMemory(){
+        return myMemory;
     }
 }

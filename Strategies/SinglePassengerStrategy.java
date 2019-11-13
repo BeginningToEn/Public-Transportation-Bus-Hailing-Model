@@ -13,13 +13,12 @@ import java.util.*;
 public class SinglePassengerStrategy implements Strategy{
     private Map<Integer, Bus> allBuses;
     private BusCoordinator myCoordinator;
-    private Queue<Trip> pickupQueue;
+    private SP_TripCoordinator myTripCoordinator;
 
-    public SinglePassengerStrategy(Map<Integer, Bus> allBuses, BusCoordinator myCoordinator,
-                                   Queue<Trip> pickupQueue){
+    public SinglePassengerStrategy(Map<Integer, Bus> allBuses, BusCoordinator myCoordinator){
         this.allBuses = allBuses;
         this.myCoordinator = myCoordinator;
-        this.pickupQueue = pickupQueue;
+        myTripCoordinator = new SP_TripCoordinator();
     }
 
     //returns the ID of the bus closest that carries no passengers
@@ -55,9 +54,9 @@ public class SinglePassengerStrategy implements Strategy{
 
     public void assignBuses(){
 
-        while ( !pickupQueue.isEmpty() && myCoordinator.busAvailable() ) {
+        while ( !myTripCoordinator.isEmpty() && myCoordinator.busAvailable() ) {
 
-            Trip myTrip = pickupQueue.poll();
+            Trip myTrip = myTripCoordinator.poll();
             int closestBusID = getClosestAvailableBusID(myTrip).get();
             this.assignItinerary( closestBusID, myTrip);
             myCoordinator.recordAssignments(closestBusID);
@@ -67,15 +66,19 @@ public class SinglePassengerStrategy implements Strategy{
     public Map<Integer,Trip> createAssignments(){
         Map<Integer,Trip> myAssignments = new HashMap<>();
 
-        while ( !pickupQueue.isEmpty() && myCoordinator.busAvailable() ) {
+        while ( !myTripCoordinator.isEmpty() && myCoordinator.busAvailable() ) {
 
-            Trip myTrip = pickupQueue.poll();
+            Trip myTrip = myTripCoordinator.poll();
             int closestBusID = getClosestAvailableBusID(myTrip).get();
             myAssignments.put( closestBusID, myTrip );
             myCoordinator.recordAssignments(closestBusID);
         }
 
         return myAssignments;
+    }
+
+    public void receiveNewTrip(Trip newTrip){
+        myTripCoordinator.addTrip(newTrip);
     }
 
 }

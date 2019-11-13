@@ -108,7 +108,7 @@ public class PrintConsoleTests {
         //Create a passenger source which here takes the form of a PassengerTimeTableReader but can be other things
         TripTimeTable myPassTTable = new TripTimeTable();
         List<Trip> spawnAtZero = new ArrayList<>();
-        spawnAtZero.add(new Trip(1, 1, 1, 2, 2, 0));
+        spawnAtZero.add(new Trip(1, 2, 2, 3, 3, 0));
         List<Trip> spawnAtFive = new ArrayList<>();
         spawnAtFive.add(new Trip(1, 1, 1, 2, 2, 0));
         myPassTTable.put(0, spawnAtZero);   //need to check what the key is supposed to be, right now key = spawn turn
@@ -165,17 +165,22 @@ public class PrintConsoleTests {
     public static void testScenario(){
         //create definition that defines grid, busCapacity, numTurns, and can be used to create bus and pass tables
         //length, height, numPass, numBuses, busCapacity, numTurns
-        ScenarioDefinition myDef = new ScenarioDefinition(100,100,100,2,1,8);
+        ScenarioDefinition myDef = new ScenarioDefinition(100,100,100,2,1,200);
 
         //create a custom Passengers
         TripTimeTableFactory myFactory = new TripTimeTableFactory();
-        TripTimeTable passTable = myFactory.createUniformDistribution(myDef);
-        TripSource tripSource = new TripTimeTableReader(passTable);
+        TripTimeTable tripTable = myFactory.createUniformDistribution(myDef);
+        TripSource tripSource = new TripTimeTableReader(tripTable);
 
         BusFactory myBusFactory = new BusFactory();
         BusTable myBusTable = myBusFactory.createDistribution(myDef);
 
         ScenarioSimulation mySim = ScenarioSimulation.setup(myDef, tripSource, myBusTable);
         mySim.run();
+        System.out.println("####");
+        mySim.getMemory().print();
+
+        //System.out.println("####");
+        //tripTable.printAllWithLambdas();
     }
 }
