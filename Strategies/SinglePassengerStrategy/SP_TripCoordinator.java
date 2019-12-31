@@ -1,4 +1,4 @@
-package Strategies;
+package Strategies.SinglePassengerStrategy;
 
 import UniverseP.Units.Trip;
 
@@ -21,7 +21,7 @@ public class SP_TripCoordinator {
         this.pickupQueue = new ConcurrentLinkedDeque<>();
     }
 
-    public void addTrip(Set<Trip> newTrips){
+    public void addTrip(Iterable<Trip>  newTrips){
         for(Trip myTrip : newTrips){
             pickupQueue.offer(myTrip);
         }

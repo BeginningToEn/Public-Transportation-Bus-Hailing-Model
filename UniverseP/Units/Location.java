@@ -58,4 +58,8 @@ public class Location {
         this.x++;
     }
 
+    public static int getDistance(Location a, Location b){
+        return Math.abs(a.getX() - b.getX()) + Math.abs(a.getY() - b.getY());
+    }
+
 }

@@ -20,6 +20,10 @@ public abstract class ActionableLocation extends Location{
     public int getY() { return super.getY(); }
     public int getPassengerID() { return passengerID; }
 
+    public static int getDistance(ActionableLocation a, ActionableLocation b){
+        return Location.getDistance(a, b);
+    }
+
     @Override
     abstract public boolean equals(Object o);
 }

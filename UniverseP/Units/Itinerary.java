@@ -2,6 +2,8 @@ package UniverseP.Units;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.Set;
+import java.util.HashSet;
 
 /**
  * A member of a bus object
@@ -10,9 +12,11 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class Itinerary{
     private Queue<ActionableLocation> destinationQueue;
+    private Set<Integer> tripIDs;
 
     public Itinerary() {
         this.destinationQueue = new ConcurrentLinkedDeque<>();
+        this.tripIDs = new HashSet<>();
     }
 
     public boolean isEnroutePickUp() {
@@ -22,6 +26,7 @@ public class Itinerary{
     //Itinerary creation method used by the SinglePassengerStrat
     public static Itinerary createDirectItinerary(Trip myTrip) {
         Itinerary output = new Itinerary();
+        output.addTripID(myTrip.getID());
         output.offer(myTrip.getSpawn());
         output.offer(myTrip.getDestination());
         return output;
@@ -33,6 +38,12 @@ public class Itinerary{
 
     public boolean isEmpty(){
         return destinationQueue.isEmpty();
+    }
+
+    public void addTripID(int tripID){ tripIDs.add(tripID); }
+
+    public Set<Integer> getTripIDs() {
+        return tripIDs;
     }
 
     public ActionableLocation poll(){

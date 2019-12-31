@@ -1,5 +1,6 @@
 package Strategies;
 
+import Strategies.SinglePassengerStrategy.SinglePassengerStrategy;
 import UniverseP.ScenarioSimulation.BusCoordinator;
 import UniverseP.Units.*;
 import org.junit.Test;
@@ -27,7 +28,7 @@ public class SinglePassengerStrategyTest {
 
         BusCoordinator myCoordinator = BusCoordinator.createBusCoordinator(allBuses.keySet());
 
-        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, myCoordinator, tripQueue);
+        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, myCoordinator);
 
         assertTrue(myBus.getItinerary().isEmpty());
 
@@ -55,7 +56,7 @@ public class SinglePassengerStrategyTest {
         Queue<Trip> tripQueue = new ConcurrentLinkedQueue<>();
         tripQueue.offer(new Trip(1, 17, 9, 2, 2, 0));
 
-        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, myCoordinator, tripQueue);
+        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, myCoordinator);
 
         //assignment has not occured yet so all buses should have no itinerary
         assertTrue(myBus1.getItinerary().isEmpty());
@@ -89,7 +90,7 @@ public class SinglePassengerStrategyTest {
         tripQueue.offer(new Trip(2, 35, 35, 6, 7, 0));
         tripQueue.offer(new Trip(3, 10, 10, 2, 2, 0));
 
-        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, myCoordinator, tripQueue);
+        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, myCoordinator);
 
         assertTrue(myBus1.getItinerary().isEmpty());
         assertTrue(myBus2.getItinerary().isEmpty());

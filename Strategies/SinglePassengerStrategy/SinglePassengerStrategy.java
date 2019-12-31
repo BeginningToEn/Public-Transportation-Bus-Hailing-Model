@@ -1,6 +1,8 @@
-package Strategies;
+package Strategies.SinglePassengerStrategy;
 
+import Strategies.Strategy;
 import UniverseP.ScenarioSimulation.ScenarioDefinition;
+import UniverseP.Units.Assignment;
 import UniverseP.Units.Bus;
 import UniverseP.ScenarioSimulation.BusCoordinator;
 import UniverseP.Units.Itinerary;
@@ -10,7 +12,7 @@ import java.util.*;
 
 //Uber Strategy- buses only carry one person
 //If a bus is en route to pick up passengers and a bus that is closer becomes available assignments should change
-public class SinglePassengerStrategy implements Strategy{
+public class SinglePassengerStrategy implements Strategy {
     private Map<Integer, Bus> allBuses;
     private BusCoordinator myCoordinator;
     private SP_TripCoordinator myTripCoordinator;
@@ -63,22 +65,44 @@ public class SinglePassengerStrategy implements Strategy{
         }
     }
 
-    public Map<Integer,Trip> createAssignments(){
-        Map<Integer,Trip> myAssignments = new HashMap<>();
+    public List<Assignment> createAssignments(){
+        List<Assignment> myAssignments = new ArrayList<>();
 
         while ( !myTripCoordinator.isEmpty() && myCoordinator.busAvailable() ) {
 
             Trip myTrip = myTripCoordinator.poll();
+            Itinerary myItinerary = Itinerary.createDirectItinerary(myTrip);
             int closestBusID = getClosestAvailableBusID(myTrip).get();
-            myAssignments.put( closestBusID, myTrip );
+            myAssignments.add( new Assignment(myItinerary, closestBusID) );
             myCoordinator.recordAssignments(closestBusID);
         }
 
         return myAssignments;
     }
 
+
+    public Map<Integer,Itinerary> createItinerariesMap() {
+
+        Map<Integer,Itinerary> myItineraries = new HashMap<>();
+
+        while ( !myTripCoordinator.isEmpty() && myCoordinator.busAvailable() ) {
+
+            Trip myTrip = myTripCoordinator.poll();
+            int closestBusID = getClosestAvailableBusID(myTrip).get();
+            Itinerary myItinerary = Itinerary.createDirectItinerary(myTrip);
+            myItineraries.put( closestBusID, myItinerary );
+            myCoordinator.recordAssignments(closestBusID);
+        }
+
+        return myItineraries;
+    }
+
     public void receiveNewTrip(Trip newTrip){
         myTripCoordinator.addTrip(newTrip);
+    }
+
+    public void receiveNewTrips(Iterable<Trip> newTrips, int turn){
+        myTripCoordinator.addTrip(newTrips);
     }
 
 }

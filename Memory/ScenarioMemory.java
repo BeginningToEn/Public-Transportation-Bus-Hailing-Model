@@ -29,6 +29,12 @@ public class ScenarioMemory {
         tripMemoryByID.put(myTrip.getID(), new TripMemory(myTrip));
     }
 
+    public void logCreation(Iterable<Trip> myTrips) {
+        for(Trip it : myTrips){
+            this.logCreation(it);
+        }
+    }
+
     public void logAssignment(int tripID, int busID, int turn){
         tripMemoryByID.get(tripID).setAssigned(busID, turn);
     }

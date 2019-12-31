@@ -1,13 +1,12 @@
 package UniverseP.ScenarioSimulation;
 
 import Memory.ScenarioMemory;
-import Strategies.SinglePassengerStrategy;
+import Strategies.SinglePassengerStrategy.SinglePassengerStrategy;
 import Strategies.Strategy;
 import UniverseP.BusFactory.BusTable;
 import UniverseP.Units.*;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * ScenarioSimulation
@@ -71,8 +70,9 @@ public class ScenarioSimulation {
 
         while ( this.turn < myDef.getNumTurns() ) {
             this.handleNewTripRequests(this.turn);
-            Map<Integer,Trip> assignments = this.createAssignments();
-            this.assignBuses(assignments);
+            //Map<Integer,Itinerary> assignments = this.createItineraries();    //refactored out
+            List<Assignment> myAssignments = this.createAssignments();
+            this.assignBuses(myAssignments);
             this.moveBuses();
             this.handlePassengers();
             this.updateBusCoordinator();
@@ -85,29 +85,45 @@ public class ScenarioSimulation {
 
     private void handleNewTripRequests(int turn) {
 
-        if ( !mySource.getTrips(turn).isPresent() ){ return; }
-
-        for ( Trip it : mySource.getTrips(turn).get() ) {
-            myStrat.receiveNewTrip(it);
-            myMemory.logCreation(it);
+        if ( mySource.getTrips(turn).isPresent() ){
+            myStrat.receiveNewTrips(mySource.getTrips(turn).get(), turn);
+            myMemory.logCreation(mySource.getTrips(turn).get());
         }
     }
 
-    private Map<Integer,Trip> createAssignments(){
-        return myStrat.createAssignments();
+    private List<Assignment> createAssignments(){return myStrat.createAssignments();}
+
+    private void assignItinerary(int busID, Itinerary myItinerary) {
+        allBuses.get(busID).setItinerary(myItinerary);
     }
 
-    private void assignItinerary(int BusID, Trip myTrip) {
-        Itinerary myItinerary = Itinerary.createDirectItinerary(myTrip);
-        allBuses.get(BusID).setItinerary(myItinerary);
+    private void logAssignments(int busID, Itinerary myItinerary){
+        for(int tripID : myItinerary.getTripIDs()){
+            myMemory.logAssignment(tripID, busID, turn);
+        }
     }
 
-    private void assignBuses(Map<Integer,Trip> assignments) {
+    //refactored out
+    /*private void assignBuses(Map<Integer,Itinerary> itineraries) {
 
-        for(int busID : assignments.keySet()) {
-            Trip myTrip = assignments.get(busID);
-            assignItinerary(busID, myTrip);
-            myMemory.logAssignment(myTrip.getID(), busID, turn);
+        for(int busID : itineraries.keySet()) {
+            Itinerary myItinerary = itineraries.get(busID);
+            assignItinerary(busID, myItinerary);
+            for(int tripID : myItinerary.getTripIDs()){
+                myMemory.logAssignment(tripID, busID, turn);
+            }
+        }
+    }*/
+
+    private void assignBuses(List<Assignment> assignments) {
+
+        for(Assignment myAssignment : assignments) {
+
+            Itinerary myItinerary = myAssignment.getItinerary();
+            int busID = myAssignment.getBusID();
+
+            assignItinerary(busID, myItinerary);
+            logAssignments(busID, myItinerary);
         }
     }
 

@@ -1,4 +1,4 @@
-import Strategies.SinglePassengerStrategy;
+import Strategies.SinglePassengerStrategy.SinglePassengerStrategy;
 import UniverseP.BusFactory.BusFactory;
 import UniverseP.BusFactory.BusTable;
 import UniverseP.TripFactory.NormalDistributionDefinition;
@@ -49,7 +49,7 @@ public class PrintConsoleTests {
 
         Queue<Trip> tripQueue = new ConcurrentLinkedQueue<>();
         tripQueue.offer(new Trip(1, 1, 1, 2, 2, 0));
-        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, myCoordinator, tripQueue);
+        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, myCoordinator);
 
         System.out.println(myBus.getItinerary().isEmpty());
 
@@ -77,7 +77,7 @@ public class PrintConsoleTests {
 
         BusCoordinator myCoordinator = BusCoordinator.createBusCoordinator(allBuses.keySet());
 
-        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, myCoordinator, passengerQueue);
+        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, myCoordinator);
 
         //assertTrue(myBus.getItinerary().isEmpty());
 
