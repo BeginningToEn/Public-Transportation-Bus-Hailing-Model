@@ -62,4 +62,7 @@ public class BusCoordinator {
         return !availableBusesByIDs.isEmpty();
     }
 
+    public int size() {
+        return allBusesByIDs.size();
+    }
 }

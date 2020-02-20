@@ -73,10 +73,10 @@ public class Bus {
 
             if (myItinerary.peek().isPickUpLocation()){
                 this.onboard(tripID);
-                actions.add(new ActionLog(ActionType.PICKUP, this.busID, tripID));
-            } else {    //drop off location
+                actions.add(new ActionLog(ActionType.PICKUP, this.busID, tripID, currentLocation));
+            } else if (myItinerary.peek().isDropOffLocation()){
                 this.deboard(tripID);
-                actions.add(new ActionLog(ActionType.DROPOFF, this.busID, tripID));
+                actions.add(new ActionLog(ActionType.DROPOFF, this.busID, tripID, currentLocation));
             }
 
             myItinerary.poll();

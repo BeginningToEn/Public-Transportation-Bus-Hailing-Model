@@ -45,11 +45,10 @@ public class PrintConsoleTests {
         allBuses.put(1, myBus);
         allBuses.put(2, myBus2);
 
-        BusCoordinator myCoordinator = BusCoordinator.createBusCoordinator(allBuses.keySet());
 
         Queue<Trip> tripQueue = new ConcurrentLinkedQueue<>();
         tripQueue.offer(new Trip(1, 1, 1, 2, 2, 0));
-        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, myCoordinator);
+        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses);
 
         System.out.println(myBus.getItinerary().isEmpty());
 
@@ -75,9 +74,8 @@ public class PrintConsoleTests {
         Queue<Trip> passengerQueue = new ConcurrentLinkedQueue<>();
         passengerQueue.offer(new Trip(1, 1, 1, 2, 2, 0));
 
-        BusCoordinator myCoordinator = BusCoordinator.createBusCoordinator(allBuses.keySet());
 
-        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses, myCoordinator);
+        SinglePassengerStrategy myStrat = new SinglePassengerStrategy(allBuses);
 
         //assertTrue(myBus.getItinerary().isEmpty());
 

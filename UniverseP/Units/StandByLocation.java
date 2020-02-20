@@ -1,30 +1,24 @@
 package UniverseP.Units;
 
-import java.util.Collection;
-
 /**
- * Created by EG OLIVER RC on 9/5/2017.
+ * Send buses to StandByLocation to await further instructions
  */
-public class PickUpLocation extends ActionableLocation {
+public class StandByLocation extends ActionableLocation {
 
-    public PickUpLocation(int x, int y, int passengerID) {
+    public StandByLocation(int x, int y, int passengerID) {
         super(x, y, passengerID);
     }
 
-    public PickUpLocation (int x, int y, Collection<Integer> passengerIDs) {
-        super(x, y, passengerIDs);
-    }
-
-    public PickUpLocation (Location newLocation, int passengerID) {
+    public StandByLocation(Location newLocation, int passengerID) {
         super(newLocation.getX(), newLocation.getY(), passengerID);
     }
 
-    public PickUpLocation (Location newLocation, Collection<Integer> passengerIDs) {
-        super(x, y, passengerIDs);
+    public StandByLocation(ActionableLocation newLocation) {
+        super(newLocation.getX(), newLocation.getY(), newLocation.getPassengerID());
     }
 
     public boolean isPickUpLocation() {
-        return true;
+        return false;
     }
     public boolean isDropOffLocation() {
         return false;
@@ -42,7 +36,7 @@ public class PickUpLocation extends ActionableLocation {
 
         if (o == null || getClass() != o.getClass()) return false;
 
-        PickUpLocation compared = (PickUpLocation) o;
+        StandByLocation compared = (StandByLocation) o;
 
         if (this.getX() != compared.getX()) {
             return false;

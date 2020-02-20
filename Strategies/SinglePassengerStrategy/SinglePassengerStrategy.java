@@ -2,11 +2,8 @@ package Strategies.SinglePassengerStrategy;
 
 import Strategies.Strategy;
 import UniverseP.ScenarioSimulation.ScenarioDefinition;
-import UniverseP.Units.Assignment;
-import UniverseP.Units.Bus;
+import UniverseP.Units.*;
 import UniverseP.ScenarioSimulation.BusCoordinator;
-import UniverseP.Units.Itinerary;
-import UniverseP.Units.Trip;
 
 import java.util.*;
 
@@ -17,9 +14,9 @@ public class SinglePassengerStrategy implements Strategy {
     private BusCoordinator myCoordinator;
     private SP_TripCoordinator myTripCoordinator;
 
-    public SinglePassengerStrategy(Map<Integer, Bus> allBuses, BusCoordinator myCoordinator){
+    public SinglePassengerStrategy(Map<Integer, Bus> allBuses){
         this.allBuses = allBuses;
-        this.myCoordinator = myCoordinator;
+        this.myCoordinator = BusCoordinator.createBusCoordinator(allBuses.keySet());
         myTripCoordinator = new SP_TripCoordinator();
     }
 
@@ -97,12 +94,23 @@ public class SinglePassengerStrategy implements Strategy {
         return myItineraries;
     }
 
-    public void receiveNewTrip(Trip newTrip){
+    public Set<Integer> getAssigned(){
+        return myCoordinator.getAssigned();
+    }
+
+    public void recordAvailable(Set<Integer> additionalAvailable){ myCoordinator.recordAvailable(additionalAvailable);}
+
+    public void receiveNewTrip(Trip newTrip, int turn){
         myTripCoordinator.addTrip(newTrip);
     }
 
     public void receiveNewTrips(Iterable<Trip> newTrips, int turn){
         myTripCoordinator.addTrip(newTrips);
+    }
+
+
+    public void receivePickUpDropOffLog(List<ActionLog> actionsLogs){
+        //pass: pick up and drop off data is irrelevant for single passenger strategy
     }
 
 }

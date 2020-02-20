@@ -16,7 +16,7 @@ public class TwoPoolStrategy implements Strategy {
 
     public TwoPoolStrategy(Map<Integer, Bus> allBuses, BusCoordinator myCoordinator){
         this.allBuses = allBuses;
-        this.myCoordinator = myCoordinator;
+        this.myCoordinator = BusCoordinator.createBusCoordinator(allBuses.keySet());
         myTripCoordinator = new TwoPoolTripCoordinator();
     }
 
@@ -203,8 +203,16 @@ public class TwoPoolStrategy implements Strategy {
         return myItinerariesMap;
     }
 
-    public void receiveNewTrip(Trip newTrip){
-        myTripCoordinator.addTrip(newTrip);
+    public Set<Integer> getAssigned(){
+        return myCoordinator.getAssigned();
+    }
+
+    public void recordAvailable(Set<Integer> additionalAvailable){
+        myCoordinator.recordAvailable(additionalAvailable);
+    }
+
+    public void receiveNewTrip(Trip newTrip, int turn){
+        //TwoPoolStrategy does not use this interface function
     }
 
     public void receiveNewTrips(Iterable<Trip> newTrips, int turn){
@@ -212,5 +220,10 @@ public class TwoPoolStrategy implements Strategy {
         myTripCoordinator.updateTime(turn);
         myTripCoordinator.handleNewTurn(newTrips);
     }
+
+    public void receivePickUpDropOffLog(List<ActionLog> actionsLogs){
+        //pass: pick up and drop off data is irrelevant for single passenger strategy
+    }
+
 
 }

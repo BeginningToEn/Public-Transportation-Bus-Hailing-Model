@@ -1,5 +1,6 @@
 package UniverseP.Units;
 
+import java.util.Collection;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.Set;
@@ -32,6 +33,24 @@ public class Itinerary{
         return output;
     }
 
+    public static Itinerary createIndirectItinerary(Trip myTrip, ActionableLocation start, ActionableLocation end){
+        Itinerary output = new Itinerary();
+        output.addTripID(myTrip.getID());
+        output.offer(start);
+        output.offer(end);
+        return output;
+    }
+
+    public static Itinerary createFerryItinerary(Collection<Integer> tripIDs,
+                                                 ActionableLocation start, ActionableLocation end){
+        Itinerary output = new Itinerary();
+        output.addTripID(tripIDs);
+        output.offer(start);
+        output.offer(end);
+        output.offer(new StandByLocation(start));
+        return output;
+    }
+
     public static Itinerary createEmptyItinerary(){
         return new Itinerary();
     }
@@ -41,6 +60,8 @@ public class Itinerary{
     }
 
     public void addTripID(int tripID){ tripIDs.add(tripID); }
+
+    private void addTripID(Collection<Integer> tripIDs) { tripIDs.addAll(tripIDs); }
 
     public Set<Integer> getTripIDs() {
         return tripIDs;

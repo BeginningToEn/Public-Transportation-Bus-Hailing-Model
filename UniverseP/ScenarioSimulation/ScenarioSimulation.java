@@ -35,34 +35,23 @@ public class ScenarioSimulation {
 
     private ScenarioDefinition myDef;
     private TripSource mySource;
-    private BusTable allBuses;
+    private Map<Integer, Bus> allBuses;
     private Strategy myStrat;
     private int turn;
 
     private ScenarioMemory myMemory;
 
-    private BusCoordinator myBusCoordinator;
-    private Set<Integer> allPassengersByID;
-    private Set<Integer> passengersToPickUpByID;
-    private Set<Integer> passengersEnRouteByID;
-    private Set<Integer> deliveredPassengersByID;
-
-    private ScenarioSimulation(ScenarioDefinition myDef, TripSource mySource, BusTable allBuses /*an enum for strat should go here*/ ){
+    private ScenarioSimulation(ScenarioDefinition myDef, TripSource mySource, Map<Integer, Bus> allBuses /*an enum for strat should go here*/ ){
         this.myDef = myDef;
         this.mySource = mySource;
         this.allBuses = allBuses;
         this.myMemory = new ScenarioMemory(myDef);
         this.turn = 0;
 
-        this.myBusCoordinator = BusCoordinator.createBusCoordinator(allBuses.keySet());
-        this.allPassengersByID = new HashSet<>();
-        this.passengersToPickUpByID = new HashSet<>();
-        this.passengersEnRouteByID = new HashSet<>();
-        this.deliveredPassengersByID = new HashSet<>();
-        this.myStrat = new SinglePassengerStrategy(allBuses, myBusCoordinator);  //this should be a var
+        this.myStrat = new SinglePassengerStrategy(allBuses);  //this should be a var
     }
 
-    public static ScenarioSimulation setup(ScenarioDefinition myDef, TripSource mySource, BusTable allBuses /*an enum for strat should go here*/){
+    public static ScenarioSimulation setup(ScenarioDefinition myDef, TripSource mySource, Map<Integer, Bus> allBuses /*an enum for strat should go here*/){
         return new ScenarioSimulation(myDef, mySource, allBuses);
     }
 
@@ -103,18 +92,6 @@ public class ScenarioSimulation {
         }
     }
 
-    //refactored out
-    /*private void assignBuses(Map<Integer,Itinerary> itineraries) {
-
-        for(int busID : itineraries.keySet()) {
-            Itinerary myItinerary = itineraries.get(busID);
-            assignItinerary(busID, myItinerary);
-            for(int tripID : myItinerary.getTripIDs()){
-                myMemory.logAssignment(tripID, busID, turn);
-            }
-        }
-    }*/
-
     private void assignBuses(List<Assignment> assignments) {
 
         for(Assignment myAssignment : assignments) {
@@ -133,34 +110,42 @@ public class ScenarioSimulation {
         }
     }
 
-    //Assigned Buses onboard passengers if they're at a PickUp Location
+    //Assigned Buses pick-up and drop-off passengers if they're at a PickUp or DropOff Location
     private void handlePassengers(){
-        for ( int busID : myBusCoordinator.getAssigned() ){
+
+        List<ActionLog> allActions = new ArrayList<>();
+
+        for ( int busID : myStrat.getAssigned() ){
+
             List<ActionLog> actions = allBuses.get(busID).handlePassengers();
-            this.logActions(actions);
+
+            for(ActionLog action : actions){
+                allActions.add(action);
+                this.logActions(action);
+            }
         }
+
+        myStrat.receivePickUpDropOffLog(allActions);
     }
 
-    private void logActions(List<ActionLog> actions){
-        for(ActionLog action : actions){
-            if(action.getMyType() == ActionType.PICKUP){
-                myMemory.logOnboarding(action.getTripID(), turn);
-            } else if(action.getMyType() == ActionType.DROPOFF){
-                myMemory.logOffboarding(action.getTripID(), turn);
-            }
+    private void logActions(ActionLog action){
+        if(action.getMyType() == ActionType.PICKUP){
+            myMemory.logOnboarding(action.getTripID(), turn);
+        } else if(action.getMyType() == ActionType.DROPOFF){
+            myMemory.logOffboarding(action.getTripID(), turn);
         }
     }
 
     //call this function after handlePassengers() to mark buses that just dropped off all its passengers as unassigned
     private void updateBusCoordinator(){
         Set<Integer> emptyBusIDs = new HashSet<>();
-        for ( int it : myBusCoordinator.getAssigned() ){
+        for ( int it : myStrat.getAssigned() ){
             Bus iteratorBus = allBuses.get(it);
             if(iteratorBus.isUnassigned()){
                 emptyBusIDs.add(iteratorBus.getBusID());
             }
         }
-        myBusCoordinator.recordAvailable(emptyBusIDs);
+        myStrat.recordAvailable(emptyBusIDs);
     }
 
     private void printReport(){

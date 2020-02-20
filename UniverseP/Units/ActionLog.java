@@ -8,11 +8,13 @@ public class ActionLog {
     private ActionType myType;
     private int busID;
     private int tripID;
+    private Location myLocation;
 
-    public ActionLog(ActionType myType, int busID, int tripID) {
+    public ActionLog(ActionType myType, int busID, int tripID, Location myLocation) {
         this.myType = myType;
         this.busID = busID;
         this.tripID = tripID;
+        this.myLocation = myLocation;
     }
 
     public ActionType getMyType() {
@@ -25,5 +27,9 @@ public class ActionLog {
 
     public int getTripID() {
         return tripID;
+    }
+
+    public Location getMyLocation() {
+        return myLocation;
     }
 }
